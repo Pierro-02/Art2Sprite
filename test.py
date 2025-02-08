@@ -33,6 +33,21 @@ from models import create_model
 from util.visualizer import save_images
 from util import html
 
+def remove_every_third_image(folder_path):
+    try:
+        # Get a sorted list of files in the folder
+        files = sorted([f for f in os.listdir(folder_path) if os.path.isfile(os.path.join(folder_path, f))])
+        
+        # Loop through the files and remove every third image
+        for index, file in enumerate(files, start=1):
+            if index % 3 == 0:  # Every third file
+                file_path = os.path.join(folder_path, file)
+                os.remove(file_path)
+                # print(f"Removed: {file_path}")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+
 try:
     import wandb
 except ImportError:
@@ -78,3 +93,6 @@ if __name__ == '__main__':
             print('processing (%04d)-th image... %s' % (i, img_path))
         save_images(webpage, visuals, img_path, aspect_ratio=opt.aspect_ratio, width=opt.display_winsize, use_wandb=opt.use_wandb)
     webpage.save()  # save the HTML
+
+    folder_path = "/home/pierro/Desktop/FYP/pytorch-CycleGAN-and-pix2pix/pix2pix_experiment/test_latest/images"
+    remove_every_third_image(folder_path)

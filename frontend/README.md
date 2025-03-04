@@ -8,11 +8,11 @@ npm install @heroicons/react
 
 First, run the development server:First, run the development server:
 
-```bash```bash
+```bash
 npm run dev
-# or
+# or# or
 yarn dev
-# or
+# or# or# or# or
 pnpm dev
 # or
 bun dev

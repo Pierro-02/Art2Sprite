@@ -16,7 +16,7 @@ export function Footer() {
           <div>
             <h3 className="font-bold mb-4">Made By:</h3>
             <ul className="space-y-2">
-              <li><a href="https://www.linkedin.com/in/attique20/" target="_blank" className="text-gray-400 hover:text-white">Muhammad Attique</a></li>
+              <li><a href="https://www.linkedin.com/in/attique20/" target="_blank" className="text-gray-400 hover:text-white">Mohammad Attique</a></li>
               <li><a href="https://www.linkedin.com/in/mtaim/" target="_blank" className="text-gray-400 hover:text-white">Taimur Aamir</a></li>
               <li><a href="https://www.linkedin.com/in/rayyanzia/" target="_blank" className="text-gray-400 hover:text-white">Rayyan Zia</a></li>
             </ul>

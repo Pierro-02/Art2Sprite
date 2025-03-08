@@ -1,6 +1,6 @@
-python3 test.py --dataroot /home/pierro/Desktop/FYP/pytorch-CycleGAN-and-pix2pix/preprocessedSketches/ \
+python3 test.py --dataroot /home/pierro/Desktop/Art2Sprite/preprocessedSketches/ \
                 --name pix2pix_experiment \
                 --model pix2pix \
                 --direction AtoB \
-                --results_dir /home/pierro/Desktop/FYP/pytorch-CycleGAN-and-pix2pix \
+                --results_dir /home/pierro/Desktop/Art2Sprite \
                 --gpu_ids -1

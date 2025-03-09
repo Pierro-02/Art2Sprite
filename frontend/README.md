@@ -1,14 +1,18 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Dependency installation 
 
+```bash
+npm install @heroicons/react
+```
 ## Getting Started
 
-First, run the development server:
+First, run the development server:First, run the development server:
 
 ```bash
 npm run dev
-# or
+# or# or
 yarn dev
-# or
+# or# or# or# or
 pnpm dev
 # or
 bun dev

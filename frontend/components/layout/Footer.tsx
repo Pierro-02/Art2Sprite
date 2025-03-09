@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export function Footer() {
   return (
-    <footer className="bg-themedarkblue text-white">
+    <footer className="bg-gray-900 text-white py-10">
       <div className="container mx-auto px-4 py-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           <div>
@@ -16,7 +16,7 @@ export function Footer() {
           <div>
             <h3 className="font-bold mb-4">Made By:</h3>
             <ul className="space-y-2">
-              <li><a href="https://www.linkedin.com/in/attique20/" target="_blank" className="text-gray-400 hover:text-white">Muhammad Attique</a></li>
+              <li><a href="https://www.linkedin.com/in/attique20/" target="_blank" className="text-gray-400 hover:text-white">Mohammad Attique</a></li>
               <li><a href="https://www.linkedin.com/in/mtaim/" target="_blank" className="text-gray-400 hover:text-white">Taimur Aamir</a></li>
               <li><a href="https://www.linkedin.com/in/rayyanzia/" target="_blank" className="text-gray-400 hover:text-white">Rayyan Zia</a></li>
             </ul>

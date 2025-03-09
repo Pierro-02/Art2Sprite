@@ -33,13 +33,16 @@ export function Hero() {
             </div>
 
             <h2 className="text-lg font-semibold mb-4">2. Describe what you want for better output.</h2>
-            <input
-              type="text"
-              placeholder='For instance, "walking."'
-              value={description}
-              onChange={handleDescriptionChange}
+            <select
+              id="animation"
+              // placeholder='For instance, "walking."'
+              // value={description}
               className="w-full bg-gray-800 text-white border border-gray-700 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
+            >
+              <option value="idle">Idle</option>
+              <option value="walking">Walking</option>
+              <option value="jumping">Jumping</option>
+            </select>
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
               Create
             </button>
@@ -55,7 +58,7 @@ export function Hero() {
                   alt="Sprite Sheet"
                   width={192}
                   height={192}
-                  style={{objectFit: 'contain'}} //prevent croping of image
+                  style={{ objectFit: 'contain' }} //prevent croping of image
                 />
               ) : (
                 <p className="text-gray-500">Sprite Sheet Output will appear here.</p>

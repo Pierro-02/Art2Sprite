@@ -7,6 +7,7 @@ import Logo from "@/assets/logo.png"; // Make sure this path is correct
 import { useState } from "react";
 
 export function Header() {
+  
 
   return (
     <header className="bg-white shadow-sm sticky top-0 z-50">
@@ -18,9 +19,11 @@ export function Header() {
           </Link>
 
           <div className="flex items-center space-x-4">
+           <Link href="/NewPage">
             <button className="bg-black text-white text-sm font-semibold py-2 px-4 rounded">
-              Subscribe
+              Home
             </button>
+            </Link>
             <Link href="/signin" className="text-gray-700 hover:text-themeblue flex items-center">
               <User className="h-4 w-4 mr-1"/>
                Sign In

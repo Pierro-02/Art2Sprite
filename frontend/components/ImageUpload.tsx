@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Upload, RefreshCw } from 'lucide-react'; // Import Refresh icon
 import Image from 'next/image';
 
-export function ImageUpload() {
+export function ImageUpload(props: { imageUploaded: (uploaded: boolean) => void }) {
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
@@ -25,6 +25,7 @@ export function ImageUpload() {
     const reader = new FileReader();
     reader.onloadend = () => {
       setPreviewImage(reader.result as string);
+      props.imageUploaded(reader.result as string != null);
     };
     reader.readAsDataURL(file);
 
@@ -63,14 +64,14 @@ export function ImageUpload() {
           // Keep previewImage and fileName to display the result
         }, 1000);
       })
-      .catch((error) => {
+        .catch((error) => {
           console.error('Error uploading file:', error);
           setUploading(false);
           setPreviewImage(null);
           setFileName(null);
           setUploadComplete(false); // Reset on error
         }
-      );
+        );
 
     } catch (error) {
       console.error('Error uploading file:', error);
@@ -100,9 +101,8 @@ export function ImageUpload() {
             disabled={uploading}
           />
           <button
-            className={`flex items-center gap-2 px-6 py-3 bg-themeblue text-white rounded-lg hover:bg-themedarkblue transition ${
-              uploading ? 'opacity-75 cursor-not-allowed' : ''
-            }`}
+            className={`flex items-center gap-2 px-6 py-3 bg-themeblue text-white rounded-lg hover:bg-themedarkblue transition ${uploading ? 'opacity-75 cursor-not-allowed' : ''
+              }`}
             disabled={uploading}
           >
             <Upload className="h-5 w-5" />

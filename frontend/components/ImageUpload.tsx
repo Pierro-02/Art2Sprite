@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Upload, RefreshCw } from 'lucide-react'; // Import Refresh icon
 import Image from 'next/image';
 
-export function ImageUpload(props: { imageUploaded: (uploaded: boolean) => void }) {
+export function ImageUpload(props: { imageUploaded: (uploaded: string) => void }) {
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
@@ -25,7 +25,7 @@ export function ImageUpload(props: { imageUploaded: (uploaded: boolean) => void 
     const reader = new FileReader();
     reader.onloadend = () => {
       setPreviewImage(reader.result as string);
-      props.imageUploaded(reader.result as string != null);
+      props.imageUploaded(reader.result as string);
     };
     reader.readAsDataURL(file);
 

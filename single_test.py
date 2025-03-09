@@ -1,5 +1,5 @@
 import sys
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, File, UploadFile
 import os
 from options.test_options import TestOptions
 from data import create_dataset
@@ -51,8 +51,8 @@ async def run_inference():
             model.test()
             visuals = model.get_current_visuals()
             img_path = model.get_image_paths()
-            if i % 5 == 0:
-                print('processing (%04d)-th image... %s' % (i, img_path))
+            # if i % 5 == 0:
+            #     print('processing (%04d)-th image... %s' % (i, img_path))
             save_images(webpage, visuals, img_path, aspect_ratio=opt.aspect_ratio, width=opt.display_winsize)
         webpage.save()
 
@@ -64,9 +64,13 @@ async def run_inference():
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+
+
 # Main function to parse options and run the API
 if __name__ == "__main__":
     import uvicorn
+    UPLOAD_DIR = "uploads"
+    os.makedirs(UPLOAD_DIR, exist_ok=True)
 
     # Mock command-line arguments
     sys.argv = [
@@ -75,16 +79,26 @@ if __name__ == "__main__":
         "--name", "pix2pix_experiment",
         "--model", "pix2pix",
         "--direction", "AtoB",
-        "--results_dir", "/home/pierro/Desktop",
+        "--results_dir", "/home/pierro/Desktop/Art2Sprite/frontend/public",
         "--gpu_ids", "-1",
     ]
 
-    # Parse the options
-
-
     # Pass the parsed options to the API function
     @app.post("/run-inference")
-    async def run_inference_wrapper():
+    async def run_inference_wrapper(file: UploadFile = File(...)):
+        file_path = os.path.join(UPLOAD_DIR, file.filename)
+        with open(file_path, "wb") as buffer:
+            buffer.write(await file.read())
+        sys.argv = [
+            "single_test.py",  # Mock the script name
+            "--dataroot", file_path,
+            "--name", "pix2pix_experiment",
+            "--model", "pix2pix",
+            "--direction", "AtoB",
+            "--results_dir", "/home/pierro/Desktop",
+            "--gpu_ids", "-1",
+        ]
+
         return await run_inference()
 
     # Run the API

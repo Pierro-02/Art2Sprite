@@ -2,24 +2,60 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ImageUpload } from "@/components/ImageUpload";
 import Image from 'next/image';
 import { image } from 'framer-motion/m';
 import { Console } from 'console';
 
+import { getSprite } from '@/api/sprite';
+import { Result } from 'postcss';
+import { blob } from 'stream/consumers';
 
 
 export function Hero() {
-  const [imageUploaded, setImageUploaded] = useState<boolean>(false)
+  const [imageUploaded, setImageUploaded] = useState<string | null>(null)
   const [description, setDescription] = useState('');
   const [spriteSheetUrl, setSpriteSheetUrl] = useState<string | null>(null); // Add state for sprite sheet URL
+
+  const getImageAsBlobURL = async (filePath: string): Promise<string | null> => {
+    try {
+      const response = await fetch(filePath); // Fetch the image
+      if (!response.ok) {
+        throw new Error('Failed to load image');
+      }
+
+      const blob = await response.blob(); // Convert response to blob
+      const blobURL = URL.createObjectURL(blob);
+      return blobURL;
+    } catch (error) {
+      console.error('Error loading image:', error);
+      return null;
+    }
+  };
+
+
+  const onCreateClicked = () => {
+    if (imageUploaded) {
+      getSprite(imageUploaded).then((result) => {
+        if (result) {
+          const path = "/pix2pix_experiment/test_latest/images" + "/test_fake_B.png"
+          getImageAsBlobURL(path).then((blobURL) => {
+            handleSpriteSheetGenerated(blobURL);
+            console.log(`Images retrieved: ${result.message} ${result.results_dir}`)
+          })
+        }
+      })
+    }
+  }
+
 
   const handleDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setDescription(event.target.value);
   };
 
   const handleSpriteSheetGenerated = (url: string | null) => {
+    console.log(url)
     setSpriteSheetUrl(url); // Update the spriteSheetUrl when it's generated
   };
 
@@ -32,7 +68,7 @@ export function Hero() {
           <div>
             <h2 className="text-lg font-semibold mb-4">1. Upload Your Sketch</h2>
             <div className="border-dashed border-2 border-gray-700 rounded-lg p-4 mb-4"> {/* Adjust border color */}
-              <ImageUpload imageUploaded={(uploaded: boolean) => setImageUploaded(uploaded)} /> {/* Pass handleSpriteSheetGenerated */}
+              <ImageUpload imageUploaded={(uploaded: string) => setImageUploaded(uploaded)} /> {/* Pass handleSpriteSheetGenerated */}
             </div>
 
             <h2 className="text-lg font-semibold mb-4">2. Describe what you want for better output.</h2>
@@ -46,7 +82,11 @@ export function Hero() {
               <option value="walking">Walking</option>
               <option value="jumping">Jumping</option>
             </select>
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4" disabled={!imageUploaded}>
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+              disabled={!imageUploaded}
+              onClick={onCreateClicked}
+            >
               Create
             </button>
           </div>

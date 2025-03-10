@@ -16,14 +16,14 @@ export default function Showcase() {
       after: "/placeholder.svg?height=300&width=300",
     },
     {
-      title: "Environment Assets",
-      description: "Convert landscape and environment art into tileable pixel assets.",
+      title: "Character Sprites",
+      description: "Transform character art into game-ready sprites with multiple animations.",
       before: "/placeholder.svg?height=300&width=300",
       after: "/placeholder.svg?height=300&width=300",
     },
     {
-      title: "Item Collections",
-      description: "Create consistent item sprites for your game inventory systems.",
+      title: "Character Sprites",
+      description: "Transform character art into game-ready sprites with multiple animations.",
       before: "/placeholder.svg?height=300&width=300",
       after: "/placeholder.svg?height=300&width=300",
     },

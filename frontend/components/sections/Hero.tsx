@@ -60,7 +60,7 @@ export function Hero() {
   };
 
   return (
-    <section className="bg-gray-900 text-white py-10"> {/* Dark background */}
+    <section className="bg-white-900 text-gray-900 py-10"> {/* Dark background */}
       <div className="container mx-auto px-4 ">
         {/* Main Content Area */}
         <div className="grid grid-cols-2 gap-8">
@@ -76,7 +76,7 @@ export function Hero() {
               id="animation"
               // placeholder='For instance, "walking."'
               // value={description}
-              className="w-full bg-gray-800 text-white border border-gray-700 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full bg-white text-grey-900 border border-gray-700 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="idle">Idle</option>
               <option value="walking">Walking</option>

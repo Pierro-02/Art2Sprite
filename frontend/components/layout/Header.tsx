@@ -19,12 +19,12 @@ export function Header() {
           </Link>
 
           <div className="flex items-center space-x-4">
-           <Link href="/NewPage">
+           <Link href="/Work">
             <button className="bg-black text-white text-sm font-semibold py-2 px-4 rounded">
               Home
             </button>
             </Link>
-            <Link href="/signin" className="text-gray-700 hover:text-themeblue flex items-center">
+            <Link href="/Signup" className="text-gray-700 hover:text-themeblue flex items-center">
               <User className="h-4 w-4 mr-1"/>
                Sign In
             </Link>

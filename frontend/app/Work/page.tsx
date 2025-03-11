@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-white">
       <Header />
-      <Hero />
+      <Hero/>
       <Footer />
     </main>
   );

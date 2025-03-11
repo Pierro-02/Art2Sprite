@@ -16,7 +16,7 @@ interface Project {
   description: string
   shortdescription: string
   color: string
-  imageSrc: any 
+  imageSrc: any
 }
 
 export default function OverlappingCardsSection() {

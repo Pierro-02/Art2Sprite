@@ -21,7 +21,7 @@ export function Header() {
           <div className="flex items-center space-x-4">
            <Link href="/Work">
             <button className="bg-black text-white text-sm font-semibold py-2 px-4 rounded">
-              Home
+              Workspace
             </button>
             </Link>
             <Link href="/Signup" className="text-gray-700 hover:text-themeblue flex items-center">

@@ -112,8 +112,8 @@ export default function Header() {
               <a href="#timeline" className="text-gray-300 hover:text-white block px-3 py-2 transition-colors">
                 Timeline
               </a>
-              <a href="#" className="text-gray-300 hover:text-white block px-3 py-2 transition-colors">
-                Contact
+              <a href="/Work" className="text-gray-300 hover:text-white block px-3 py-2 transition-colors">
+                Workspace
               </a>
               
                <Button

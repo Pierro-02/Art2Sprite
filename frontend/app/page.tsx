@@ -1,26 +1,20 @@
-import { About } from "@/components/sections/About";
-import { Footer } from "@/components/layout/Footer";
-import  Header  from "@/components/layout/Header2";
-import  RainingLetters  from "@/components/sections/raining-letters"
-import { TwoColumn } from "@/components/sections/TwoColumn";
-import Showcase from "@/components/sections/showcase";
-import OverlappingCardsSection from "@/components/sections/OverlappingCards"
+import Navbar from "@/components/layout/navbar"
+import Hero from "@/components/Landing page/hero"
+import Features from "@/components/Landing page/features"
+import Timeline from "@/components/Landing page/timeline"
+import CTA from "@/components/Landing page/cta"
+import Footer from "@/components/layout/Footer"
 
-export default function Home() {
+export default function LandingPage() {
   return (
-    
-    <div className="min-h-screen bg-grey text-white">
-        
-        
-        
-        <Header />
-        <RainingLetters />
-        <OverlappingCardsSection />
-   
-        <Showcase />
-        <About />
-        <Footer />
-      </div>
-   
-  );
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black text-white">
+      <Navbar />
+      <Hero />
+      <Features />
+      <Timeline />
+      <CTA />
+      <Footer />
+    </div>
+  )
 }
+

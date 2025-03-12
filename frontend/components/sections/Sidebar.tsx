@@ -12,10 +12,10 @@ interface SidebarProps {
 
 export default function Sidebar({ isOpen, onClose, title, description, image, width }: SidebarProps) {
   return (
-    <div className={`fixed inset-y-0 right-0 w-full max-w-md bg-white shadow-2xl transform transition-transform duration-300 ease-in-out z-50 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+    <div className={`fixed inset-y-0 right-0 w-full max-w-md bg-gradient-to-br from-gray-900 to-black border-l border-gray-700 shadow-2xl transform transition-transform duration-300 ease-in-out z-50 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
       <div className="h-full overflow-y-auto">
-        <div className="relative h-[600px]">
-          <Image src={image || "/placeholder.svg"} alt={title} layout="fill" objectFit="contain" />
+        <div className="relative h-[600px] bg-white">
+          <Image src={image || "/placeholder.svg"} alt={title} layout="fill" objectFit="contain"/>
           <button
             onClick={onClose}
             className="absolute top-4 right-4 bg-white rounded-full p-2 shadow-md text-gray-800 hover:text-gray-600 transition-colors duration-200"
@@ -24,8 +24,8 @@ export default function Sidebar({ isOpen, onClose, title, description, image, wi
           </button>
         </div>
         <div className="p-6">
-          <h2 className="text-3xl font-bold mb-4 text-gray-900">{title}</h2>
-          <p className="text-gray-700 leading-relaxed">{description}</p>
+          <h2 className="text-3xl font-bold mb-4 text-gray-100">{title}</h2>
+          <p className="text-white leading-relaxed">{description}</p>
         </div>
       </div>
     </div>

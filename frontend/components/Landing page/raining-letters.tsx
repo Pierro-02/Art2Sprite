@@ -99,13 +99,13 @@ const ScrambledTitle: React.FC = () => {
   useEffect(() => {
     if (mounted && scramblerRef.current) {
       const phrases = [
-        "Hey there,",
-        "Creativity is Pouring In",
-        "with Artistic Strokes",
-        "and Unique Designs",
-        "Make Sure to Carry",
-        "Your Imagination Everywhere"
-      ];
+        "Art2Sprite",
+        "Pixel Perfect",
+        "Game Ready Art",
+        "AI-Powered Conversion",
+        "Animate Your World",
+        "Create Anywhere",
+      ]
 
       let counter = 0
       const next = () => {
@@ -198,7 +198,7 @@ const RainingLetters: React.FC = () => {
   return (
     <div className="relative w-full h-screen bg-black overflow-hidden">
       {/* Title */}
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20">
+      <div className="absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 mt-40">
         <ScrambledTitle />
       </div>
 
@@ -208,7 +208,7 @@ const RainingLetters: React.FC = () => {
           key={index}
           className={`absolute text-xs transition-colors duration-100 ${
             activeIndices.has(index)
-              ? "text-[#00ff00] text-base scale-125 z-10 font-bold animate-pulse"
+              ? "text-blue-400 text-base scale-125 z-10 font-bold animate-pulse"
               : "text-slate-600 font-light"
           }`}
           style={{
@@ -216,7 +216,7 @@ const RainingLetters: React.FC = () => {
             top: `${char.y}%`,
             transform: `translate(-50%, -50%) ${activeIndices.has(index) ? "scale(1.25)" : "scale(1)"}`,
             textShadow: activeIndices.has(index)
-              ? "0 0 8px rgba(255,255,255,0.8), 0 0 12px rgba(255,255,255,0.4)"
+              ? "0 0 8px rgba(59,130,246,0.8), 0 0 12px rgba(59,130,246,0.4)"
               : "none",
             opacity: activeIndices.has(index) ? 1 : 0.4,
             transition: "color 0.1s, transform 0.1s, text-shadow 0.1s",

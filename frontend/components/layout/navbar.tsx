@@ -57,11 +57,14 @@ export default function Header() {
               <a href="./" className="text-gray-300 hover:text-blue-500 px-3 py-2 transition-colors">
                 Home
               </a>
-              <a href="#features" className="text-gray-300 hover:text-blue-500 px-3 py-2 transition-colors">
+              <a href="./#features" className="text-gray-300 hover:text-blue-500 px-3 py-2 transition-colors">
                 Features
               </a>
-              <a href="#timeline" className="text-gray-300 hover:text-blue-500 px-3 py-2 transition-colors">
+              <a href="./#timeline" className="text-gray-300 hover:text-blue-500 px-3 py-2 transition-colors">
                 Timeline
+              </a>
+              <a href="/Developers" className="text-gray-300 hover:text-blue-500 px-3 py-2 transition-colors">
+                Team
               </a>
               <a href="/Work" className="text-gray-300 hover:text-blue-500 px-3 py-2 transition-colors">
                 Workspace
@@ -112,10 +115,15 @@ export default function Header() {
               <a href="#timeline" className="text-gray-300 hover:text-white block px-3 py-2 transition-colors">
                 Timeline
               </a>
+              <a href="/Developers" className="text-gray-300 hover:text-blue-500 px-3 py-2 transition-colors">
+                Team
+              </a>
               <a href="/Work" className="text-gray-300 hover:text-white block px-3 py-2 transition-colors">
                 Workspace
               </a>
-              
+              <a href="/process" className="text-gray-300 hover:text-blue-500 px-3 py-2 transition-colors">
+                Process
+              </a>
                <Button
                 className="ml-2 mt-2 border-blue-500 text-blue-400 hover:bg-blue-500 hover:text-white transition-colors" 
                 onClick={handleLoginClick}

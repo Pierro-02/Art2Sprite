@@ -5,6 +5,7 @@ import Link from "next/link"
 
 export default function LoginPage() {
   return (
+    
     <div className="flex min-h-screen bg-black">
       {/* Left Section */}
       <div className="relative hidden w-1/2 p-8 lg:block">

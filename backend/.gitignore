@@ -43,4 +43,4 @@ art2sprite/static/uploads/
 alembic/versions/
 
 # Ignore pytest cache
-.pytest_cache/
+.pytest_cache/node

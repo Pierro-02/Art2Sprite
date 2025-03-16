@@ -1,148 +1,92 @@
-'use client';
+"use client"
 
-import { useState } from 'react';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { collection, addDoc } from 'firebase/firestore';
-import { storage, db } from '@/lib/firebase';
-import { v4 as uuidv4 } from 'uuid';
-import { Upload, RefreshCw } from 'lucide-react'; // Import Refresh icon
-import Image from 'next/image';
+import type React from "react"
 
-export function ImageUpload(props: { imageUploaded: (uploaded: string) => void }) {
-  const [uploading, setUploading] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState(0);
-  const [previewImage, setPreviewImage] = useState<string | null>(null);
-  const [fileName, setFileName] = useState<string | null>(null);
-  const [uploadComplete, setUploadComplete] = useState(false); // New state
+import { useState, useEffect } from "react"
+import { Upload } from "lucide-react"
 
-  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
+interface ImageUploadProps {
+  imageUploaded: (imageData: string) => void
+  resetImage?: boolean
+}
 
-    setFileName(file.name);
+export function ImageUpload({ imageUploaded, resetImage = false }: ImageUploadProps) {
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null)
+  const [isDragging, setIsDragging] = useState(false)
 
-    // Create a preview URL
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setPreviewImage(reader.result as string);
-      props.imageUploaded(reader.result as string);
-    };
-    reader.readAsDataURL(file);
-
-    try {
-      setUploading(true);
-      setUploadProgress(0);
-
-      // Create a unique filename
-      const fileId = uuidv4();
-      const fileExtension = file.name.split('.').pop();
-      const uniqueFileName = `${fileId}.${fileExtension}`;
-
-      // Upload to Firebase Storage
-      const storageRef = ref(storage, `uploads/${uniqueFileName}`);
-
-      // Monitor upload progress
-      const uploadTask = uploadBytes(storageRef, file);
-
-      uploadTask.then(async (snapshot) => {
-        const downloadURL = await getDownloadURL(snapshot.ref);
-
-        // Save metadata to Firestore
-        await addDoc(collection(db, 'images'), {
-          fileName: file.name,
-          fileUrl: downloadURL,
-          uploadedAt: new Date().toISOString(),
-          fileSize: file.size,
-          fileType: file.type
-        });
-        setUploadProgress(100);
-        setUploadComplete(true); // Set uploadComplete to true
-
-        setTimeout(() => {
-          setUploading(false);
-          setUploadProgress(0);
-          // Keep previewImage and fileName to display the result
-        }, 1000);
-      })
-        .catch((error) => {
-          console.error('Error uploading file:', error);
-          setUploading(false);
-          setPreviewImage(null);
-          setFileName(null);
-          setUploadComplete(false); // Reset on error
-        }
-        );
-
-    } catch (error) {
-      console.error('Error uploading file:', error);
-      setUploading(false);
-      setPreviewImage(null);
-      setFileName(null);
-      setUploadComplete(false); // Reset on error
+  // Reset the image when resetImage prop changes to true
+  useEffect(() => {
+    if (resetImage) {
+      setPreviewUrl(null)
     }
-  };
+  }, [resetImage])
 
-  const handleRefreshClick = () => {
-    // Reset state to allow new upload
-    setPreviewImage(null);
-    setFileName(null);
-    setUploadComplete(false);
-  };
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      processFile(file)
+    }
+  }
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    setIsDragging(true)
+  }
+
+  const handleDragLeave = () => {
+    setIsDragging(false)
+  }
+
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    setIsDragging(false)
+
+    const file = e.dataTransfer.files?.[0]
+    if (file) {
+      processFile(file)
+    }
+  }
+
+  const processFile = (file: File) => {
+    const reader = new FileReader()
+
+    reader.onload = (e) => {
+      const result = e.target?.result as string
+      setPreviewUrl(result)
+      imageUploaded(result)
+    }
+
+    reader.readAsDataURL(file)
+  }
 
   return (
-    <div>
-      {!uploadComplete ? (
-        <div className="relative">
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleFileUpload}
-            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-            disabled={uploading}
+    <div
+      className={`flex flex-col items-center justify-center p-6 ${isDragging ? "bg-blue-500/10 border-blue-500" : ""}`}
+      onDragOver={handleDragOver}
+      onDragLeave={handleDragLeave}
+      onDrop={handleDrop}
+    >
+      {previewUrl ? (
+        <div className="w-full">
+          <img
+            src={previewUrl || "/placeholder.svg"}
+            alt="Preview"
+            className="max-h-32 mx-auto object-contain rounded-md"
           />
-          <button
-            className={`flex items-center gap-2 px-6 py-3 bg-themeblue text-white rounded-lg hover:bg-themedarkblue transition ${uploading ? 'opacity-75 cursor-not-allowed' : ''
-              }`}
-            disabled={uploading}
-          >
-            <Upload className="h-5 w-5" />
-            {uploading ? 'Uploading...' : 'Upload Image'}
-          </button>
+          <p className="text-center text-sm text-blue-400 mt-2">Image uploaded</p>
         </div>
       ) : (
-        <button
-          onClick={handleRefreshClick}
-          className="flex items-center gap-2 px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition"
-        >
-          <RefreshCw className="h-5 w-5" />
-          Upload New Image
-        </button>
-      )}
-
-      {previewImage && (
-        <div className="mt-4">
-          <p>Preview: {fileName}</p>
-          <Image
-            src={previewImage}
-            alt="Image Preview"
-            width={100}
-            height={100}
-            className="rounded-md"
-            style={{ objectFit: 'cover' }}
-          />
-        </div>
-      )}
-
-      {uploading && (
-        <div className="mt-2">
-          <div className="h-2 w-full bg-gray-200 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-black transition-all duration-300"
-              style={{ width: `${uploadProgress}%` }}
-            />
-          </div>
-        </div>
+        <>
+          <Upload className="w-10 h-10 text-blue-500 mb-2" />
+          <p className="text-center text-gray-300 mb-2">Drag and drop your image here</p>
+          <p className="text-center text-gray-500 text-sm mb-4">or</p>
+          <label className="px-4 py-2 bg-blue-600 text-white rounded-md cursor-pointer hover:bg-blue-700 transition-colors">
+            Browse Files
+            <input type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
+          </label>
+        </>
       )}
     </div>
-  );
+  )
 }
+

@@ -10,9 +10,9 @@ const teamMembers = [
   {
     id: 1,
     name: "Mohammad Attique",
-    role: "Bald Narcotics mafia leader",
+    role: "later",
     image: "/placeholder.svg?height=400&width=400",
-    bio: "Useless peice of shit who does nashay",
+    bio: "Something something",
     skills: [""],
     github: "https://github.com/Mattique20",
     linkedin: "https://www.linkedin.com/in/attique20/",
@@ -22,26 +22,26 @@ const teamMembers = [
   {
     id: 2,
     name: "Taimur Aamir",
-    role: "CHAD",
+    role: "later",
     image: "/placeholder.svg?height=400&width=400",
-    bio: "Chad who runs Discord server, knows and can do everything, built a AI model using assembly language which solves world problems ",
+    bio: "Something Something",
     skills: ["TensorFlow", "PyTorch", "Computer Vision", "Neural Networks", "CUDA"],
     github: "https://github.com/Pierro-02",
     linkedin: "http://linkedin.com/in/mtaim/",
     resume: "/placeholder.svg", // Replace with actual resume PDF
-    email: "Gigachad@gmail.com",
+    email: "taimuraamird@gmail.com",
   },
   {
     id: 3,
     name: "Rayyan Zia",
-    role: "Nigga",
+    role: "later",
     image: "/placeholder.svg?height=400&width=400",
-    bio: "the only grp member with a woman and a job. Can hack fbi using css",
+    bio: "Something Something",
     skills: ["React", "TypeScript", "Next.js", "Framer Motion", "Tailwind CSS"],
     github: "https://github.com/RndmRyan",
     linkedin: "https://www.linkedin.com/in/rayyanzia/",
     resume: "/placeholder.svg", // Replace with actual resume PDF
-    email: "marcus@art2sprite.com",
+    email: "rayyanzia@Gmail.com",
   },
  
 ]

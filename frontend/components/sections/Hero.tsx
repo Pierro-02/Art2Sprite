@@ -7,9 +7,12 @@ import { getBasicSprite, getAnimatedSprite } from "@/api/newsprite"
 import { Sparkles, Upload, Wand2, RefreshCw } from "lucide-react"
 import { ImageUpload } from "@/components/ImageUpload"
 import { SpriteOutput } from "./sprite-output"
-import idle from "@/assets/idle.gif"
-import jump from "@/assets/JUMP.gif"
-import run from "@/assets/Run.gif"
+
+
+const idle = "/assets/idle.gif"
+const jump = "/assets/jump.gif"
+const run = "/assets/walking.gif"
+
 export function Hero() {
   const [imageUploaded, setImageUploaded] = useState<string | null>(null)
   const [animationType, setAnimationType] = useState("idle")
@@ -182,15 +185,14 @@ export function Hero() {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className={`w-full mb-8 py-3 px-6 rounded-md font-bold text-white flex items-center justify-center transition-all duration-300 ${
-                isLoadingBasic
-                  ? "bg-blue-600 cursor-wait"
-                  : imageUploaded && !basicSpriteUrl
-                    ? "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg shadow-blue-500/20"
-                    : basicSpriteUrl
-                      ? "bg-green-600 hover:bg-green-700"
-                      : "bg-gray-700 cursor-not-allowed"
-              }`}
+              className={`w-full mb-8 py-3 px-6 rounded-md font-bold text-white flex items-center justify-center transition-all duration-300 ${isLoadingBasic
+                ? "bg-blue-600 cursor-wait"
+                : imageUploaded && !basicSpriteUrl
+                  ? "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg shadow-blue-500/20"
+                  : basicSpriteUrl
+                    ? "bg-green-600 hover:bg-green-700"
+                    : "bg-gray-700 cursor-not-allowed"
+                }`}
               disabled={!imageUploaded || isLoadingBasic}
               onClick={onCreateBasicSprite}
             >
@@ -236,32 +238,28 @@ export function Hero() {
                 value={animationType}
                 onChange={handleAnimationTypeChange}
                 disabled={!basicSpriteUrl}
-                className={`w-full ${
-                  basicSpriteUrl
-                    ? "bg-gray-800 text-gray-300 border-gray-700 focus:ring-2 focus:ring-blue-500"
-                    : "bg-gray-700 text-gray-500 border-gray-600 cursor-not-allowed"
-                } border rounded-md py-3 px-4 focus:outline-none transition-all duration-300`}
+                className={`w-full ${basicSpriteUrl
+                  ? "bg-gray-800 text-gray-300 border-gray-700 focus:ring-2 focus:ring-blue-500"
+                  : "bg-gray-700 text-gray-500 border-gray-600 cursor-not-allowed"
+                  } border rounded-md py-3 px-4 focus:outline-none transition-all duration-300`}
               >
                 <option value="idle">Idle</option>
                 <option value="walking">Walking</option>
                 <option value="jumping">Jumping</option>
-                <option value="running">Running</option>
-                <option value="attack">Attack</option>
               </select>
             </motion.div>
 
             <motion.button
               whileHover={basicSpriteUrl ? { scale: 1.05 } : {}}
               whileTap={basicSpriteUrl ? { scale: 0.95 } : {}}
-              className={`w-full py-3 px-6 rounded-md font-bold text-white flex items-center justify-center transition-all duration-300 ${
-                !basicSpriteUrl
-                  ? "bg-gray-700 opacity-60 cursor-not-allowed"
-                  : isLoadingAnimated
-                    ? "bg-purple-600 cursor-wait"
-                    : animatedSpriteUrl
-                      ? "bg-green-600 hover:bg-green-700"
-                      : "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg shadow-blue-500/20"
-              }`}
+              className={`w-full py-3 px-6 rounded-md font-bold text-white flex items-center justify-center transition-all duration-300 ${!basicSpriteUrl
+                ? "bg-gray-700 opacity-60 cursor-not-allowed"
+                : isLoadingAnimated
+                  ? "bg-purple-600 cursor-wait"
+                  : animatedSpriteUrl
+                    ? "bg-green-600 hover:bg-green-700"
+                    : "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg shadow-blue-500/20"
+                }`}
               disabled={!basicSpriteUrl || isLoadingAnimated}
               onClick={onCreateAnimatedSprite}
             >

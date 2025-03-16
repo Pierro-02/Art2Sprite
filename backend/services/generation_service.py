@@ -1,7 +1,7 @@
 import sys
 from fastapi import FastAPI, HTTPException, File, UploadFile
 import os
-from services.processing_service import removeBackground
+from services.processing_service import remove_every_third_image, removeBackground
 from options.test_options import TestOptions
 from data import create_dataset
 from models import create_model
@@ -103,5 +103,51 @@ def generateSpriteSheet(img: Image, animationType: str) -> str:
         return None
     
 
-def generateSprite(img: Image):
-    pass
+def generateSprite(image_path: str):       
+    sys.argv = [
+            "single_test.py",  # Mock the script name
+            "--dataroot", image_path,
+            "--name", "pix2pix_experiment",
+            "--model", "pix2pix",
+            "--direction", "AtoB",
+            "--results_dir", "/home/pierro/Desktop",
+            "--gpu_ids", "-1",
+        ]
+
+    try:
+        opt = TestOptions().parse()
+        # hard-code some parameters for test
+        opt.num_threads = 0   # test code only supports num_threads = 0
+        opt.batch_size = 1    # test code only supports batch_size = 1
+        opt.serial_batches = True  # disable data shuffling; comment this line if results on randomly chosen images are needed.
+        opt.no_flip = True    # no flip; comment this line if results on flipped images are needed.
+        opt.display_id = -1   # no visdom display; the test code saves the results to a HTML file.
+        dataset = create_dataset(opt)  # create a dataset given opt.dataset_mode and other options
+        model = create_model(opt)      # create a model given opt.model and other options
+        model.setup(opt)               # regular setup: load and print networks; create schedulers
+
+        # Run inference
+        if opt.eval:
+            model.eval()
+
+        output_path = output_path = os.path.join(opt.results_dir, "output.png")
+        
+        for i, data in enumerate(dataset):
+            if i > 0:  # Only process one image
+                break  
+            model.set_input(data)
+            model.test()
+            visuals = model.get_current_visuals()
+
+            # Extract the first image
+            for label, image in visuals.items():
+                image_pil = Image.fromarray(image)  # Convert to PIL Image if needed
+                image_pil.save(output_path)  
+
+        # Remove every third image
+        # folder_path = os.path.join(opt.results_dir, opt.name, "test_latest/images")
+        # remove_every_third_image(folder_path)
+
+        return {"message": "Inference completed successfully", "image_url": f"/static/output_sheet.png"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))

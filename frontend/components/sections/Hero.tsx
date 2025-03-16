@@ -7,7 +7,9 @@ import { getBasicSprite, getAnimatedSprite } from "@/api/newsprite"
 import { Sparkles, Upload, Wand2, RefreshCw } from "lucide-react"
 import { ImageUpload } from "@/components/ImageUpload"
 import { SpriteOutput } from "./sprite-output"
-
+import idle from "@/assets/idle.gif"
+import jump from "@/assets/JUMP.gif"
+import run from "@/assets/Run.gif"
 export function Hero() {
   const [imageUploaded, setImageUploaded] = useState<string | null>(null)
   const [animationType, setAnimationType] = useState("idle")
@@ -86,9 +88,9 @@ export function Hero() {
 
   // Example sprite sheets for different animation types
   const exampleSprites = [
-    { type: "idle", url: "/placeholder.svg?height=150&width=150" },
-    { type: "walking", url: "/placeholder.svg?height=150&width=150" },
-    { type: "jumping", url: "/placeholder.svg?height=150&width=150" },
+    { type: "idle", url: idle },
+    { type: "Running", url: run },
+    { type: "jumping", url: jump },
   ]
 
   return (

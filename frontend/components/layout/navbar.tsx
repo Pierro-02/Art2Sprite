@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Menu, X } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import Image from 'next/image';
-import Logo from "@/assets/logo.png"; // Make sure this path is correct
+import Logo  from "@/assets/logo.png"; // Make sure this path is correct
 
 import { useRouter } from 'next/navigation'; // Import useRouter
 

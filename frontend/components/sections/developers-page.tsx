@@ -4,26 +4,27 @@ import { useRef, useState } from "react"
 import { motion, useInView, AnimatePresence } from "framer-motion"
 import { Github, Linkedin, FileText, ExternalLink, Mail } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import Image from "next/image";
 
 // Sample team data - replace with actual team information
 const teamMembers = [
   {
     id: 1,
     name: "Mohammad Attique",
-    role: "Lead Developer",
-    image: "/assets/attiquespic.jpg?height=400&width=400",
-    bio: "Technical mastermind behind Art2Sprite, specializing in AI-driven image processing and software architecture. He plays a key role in building and optimizing the platform’s core algorithms.",
+    role: "Developer",
+    image: "/Developers_info/attiques pic.jpg",
+    bio: "Computer Science graduate with a passion for innovative software development, AI, and open-source contributions. Experienced in research and hands-on projects, I enjoy problem-solving and exploring new technologies. Always eager to learn and build, and interested in exploring new tech stacks.",
     github: "https://github.com/Mattique20",
     linkedin: "https://www.linkedin.com/in/attique20/",
-    resume: "./assets/Mohammad_Attique_Resume.pdf", 
+    resume: "/Developers_info/Mohammad_Attique_Resume.pdf", 
     email: "mattique02@outlook.com",
   },
   {
     id: 2,
     name: "Taimur Aamir",
-    role: "AI Specialist",
-    image: "/assets/taimurs pic.jpg",
-    bio: "Taimur brings cutting-edge AI expertise to Art2Sprite, driving the development of intelligent sprite conversion and animation tools. His deep understanding of machine learning and computer vision ensures that Art2Sprite delivers high-quality, game-ready assets.",
+    role: "Developer",
+    image: "/Developers_info/taimurs pic.jpg",
+    bio: "Computer Science graduate with a solid foundation in full-stack development and a passion for Game Development. Experienced in building responsive web applications, Integrating AI models, and mobile games. Proficient in technologies such as Typescript, Nodejs, React, C++, Go, C# and Unity.",
     github: "https://github.com/Pierro-02",
     linkedin: "http://linkedin.com/in/mtaim/",
     resume: "/assets/Resume-M.Taimur Aamir.pdf", // Replace with actual resume PDF
@@ -32,13 +33,13 @@ const teamMembers = [
   {
     id: 3,
     name: "Rayyan Zia",
-    role: "later",
-    image: "/placeholder.svg?height=400&width=400",
-    bio: "Rayyan shapes the user experience of Art2Sprite, focusing on intuitive design and seamless workflow integration. His expertise in UI/UX and digital art helps bridge the gap between creativity and technology, making the platform accessible to artists and developers alike.",
+    role: "Developer",
+    image: "/Developers_info/rayyanspic.png",
+    bio: ".",
     github: "https://github.com/RndmRyan",
     linkedin: "https://www.linkedin.com/in/rayyanzia/",
     resume: "/placeholder.svg", // Replace with actual resume PDF
-    email: "rayyanzia@Gmail.com",
+    email: "rayyanzia2944@gmail.com",
   },
  
 ]
@@ -83,7 +84,7 @@ export default function DevelopersPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          Meet Our Team
+          Meet The Team
         </motion.h1>
         <motion.p
           className="text-xl text-gray-300 max-w-2xl mx-auto"
@@ -185,11 +186,13 @@ export default function DevelopersPage() {
                 <div className="md:flex">
                   <div className="md:w-1/3 bg-gray-800">
                     <div className="aspect-square">
-                      <img
-                        src={teamMembers.find((m) => m.id === selectedMember)?.image}
-                        alt={teamMembers.find((m) => m.id === selectedMember)?.name}
-                        className="w-full h-full object-cover"
-                      />
+                    <Image
+                      src={teamMembers.find((m) => m.id === selectedMember)?.image || "/assets/default.jpg"}
+                      alt={teamMembers.find((m) => m.id === selectedMember)?.name || "Team Member"}
+                      width={300} // Adjust width as needed
+                      height={300} // Adjust height as needed
+                      className="w-full h-full object-cover"
+                    />
                     </div>
                   </div>
                   <div className="p-6 md:w-2/3">

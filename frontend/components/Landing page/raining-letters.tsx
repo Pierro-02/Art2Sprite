@@ -99,12 +99,14 @@ const ScrambledTitle: React.FC = () => {
   useEffect(() => {
     if (mounted && scramblerRef.current) {
       const phrases = [
-        "Art2Sprite",
-        "Pixel Perfect",
-        "Game Ready Art",
-        "AI-Powered Conversion",
-        "Animate Your World",
-        "Create Anywhere",
+        "Hey there,",
+        "Welcome to Art2Sprite",
+        "Transform Sketches Instantly",
+        "AI-Driven Sprite Creation",
+        "From Concept to Pixels",
+        "Seamless Art to Sprite Conversion",
+        "Game-Ready Graphics",
+        "Design, and Animate",
       ]
 
       let counter = 0
@@ -198,7 +200,7 @@ const RainingLetters: React.FC = () => {
   return (
     <div className="relative w-full h-screen bg-black overflow-hidden">
       {/* Title */}
-      <div className="absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 mt-40">
+      <div className="absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 mt-40 mx-5">
         <ScrambledTitle />
       </div>
 

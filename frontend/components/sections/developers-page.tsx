@@ -10,34 +10,31 @@ const teamMembers = [
   {
     id: 1,
     name: "Mohammad Attique",
-    role: "later",
-    image: "/placeholder.svg?height=400&width=400",
-    bio: "Something something",
-    skills: [""],
+    role: "Lead Developer",
+    image: "/assets/attiquespic.jpg?height=400&width=400",
+    bio: "Technical mastermind behind Art2Sprite, specializing in AI-driven image processing and software architecture. He plays a key role in building and optimizing the platform’s core algorithms.",
     github: "https://github.com/Mattique20",
     linkedin: "https://www.linkedin.com/in/attique20/",
-    resume: "/placeholder.svg", 
+    resume: "./assets/Mohammad_Attique_Resume.pdf", 
     email: "mattique02@outlook.com",
   },
   {
     id: 2,
     name: "Taimur Aamir",
-    role: "later",
-    image: "/placeholder.svg?height=400&width=400",
-    bio: "Something Something",
-    skills: ["TensorFlow", "PyTorch", "Computer Vision", "Neural Networks", "CUDA"],
+    role: "AI Specialist",
+    image: "/assets/taimurs pic.jpg",
+    bio: "Taimur brings cutting-edge AI expertise to Art2Sprite, driving the development of intelligent sprite conversion and animation tools. His deep understanding of machine learning and computer vision ensures that Art2Sprite delivers high-quality, game-ready assets.",
     github: "https://github.com/Pierro-02",
     linkedin: "http://linkedin.com/in/mtaim/",
-    resume: "/placeholder.svg", // Replace with actual resume PDF
-    email: "taimuraamird@gmail.com",
+    resume: "/assets/Resume-M.Taimur Aamir.pdf", // Replace with actual resume PDF
+    email: "taimuraamir0302@gmail.com",
   },
   {
     id: 3,
     name: "Rayyan Zia",
     role: "later",
     image: "/placeholder.svg?height=400&width=400",
-    bio: "Something Something",
-    skills: ["React", "TypeScript", "Next.js", "Framer Motion", "Tailwind CSS"],
+    bio: "Rayyan shapes the user experience of Art2Sprite, focusing on intuitive design and seamless workflow integration. His expertise in UI/UX and digital art helps bridge the gap between creativity and technology, making the platform accessible to artists and developers alike.",
     github: "https://github.com/RndmRyan",
     linkedin: "https://www.linkedin.com/in/rayyanzia/",
     resume: "/placeholder.svg", // Replace with actual resume PDF
@@ -189,7 +186,7 @@ export default function DevelopersPage() {
                   <div className="md:w-1/3 bg-gray-800">
                     <div className="aspect-square">
                       <img
-                        src={teamMembers.find((m) => m.id === selectedMember)?.image || "/placeholder.svg"}
+                        src={teamMembers.find((m) => m.id === selectedMember)?.image}
                         alt={teamMembers.find((m) => m.id === selectedMember)?.name}
                         className="w-full h-full object-cover"
                       />
@@ -223,7 +220,7 @@ export default function DevelopersPage() {
                     </div>
 
                     <p className="text-gray-300 mb-6">{teamMembers.find((m) => m.id === selectedMember)?.bio}</p>
-
+                    {/*
                     <div className="mb-6">
                       <h3 className="text-lg font-semibold mb-2">Skills & Expertise</h3>
                       <div className="flex flex-wrap gap-2">
@@ -236,7 +233,7 @@ export default function DevelopersPage() {
                           ))}
                       </div>
                     </div>
-
+                      */}
                     <div className="mb-6">
                       <h3 className="text-lg font-semibold mb-2">Contact & Profiles</h3>
                       <div className="space-y-3">

@@ -5,48 +5,41 @@ import { motion, useScroll, useTransform, useSpring, useInView } from "framer-mo
 
 const timelineEvents = [
   {
-    year: 2020,
+    year: "Module 1",
     title: "Art2Sprite Founded",
-    description: "Our journey began with a passion for pixel art and game development.",
+    description: "Our journey began with a passion for AI-powered art transformation.",
     details:
-      "Founded by a team of artists and developers, Art2Sprite started as a small project to help indie game developers create consistent sprite assets.",
+      "Art2Sprite was created to explore the potential of AI in generating high-quality sprites from sketches, aiming to assist digital artists and game developers.",
   },
   {
-    year: 2021,
-    title: "AI Technology Integration",
-    description: "Implemented advanced machine learning algorithms for art conversion.",
+    year: "Module 2",
+    title: "Research & Data Collection",
+    description: "Conducted extensive research on image processing and AI-based sprite generation.",
     details:
-      "Our breakthrough came with the development of our proprietary AI that could analyze artistic styles and convert them to optimized sprite formats while preserving the original aesthetic.",
+      "Collected diverse datasets, cleaned and annotated images, and laid the foundation for developing our proprietary AI model.",
   },
   {
-    year: 2022,
-    title: "Platform Launch",
-    description: "Released our web platform for public use with subscription options.",
+    year: "Module 3",
+    title: "AI Model Development",
+    description: "Fine-tuned Image-to-Image GAN for enhanced sprite transformation.",
     details:
-      "After extensive beta testing with indie developers, we launched our platform to the public, offering both free and premium tiers for different needs and project scales.",
+      "Optimized generative adversarial networks (GANs) to accurately convert hand-drawn sketches into pixel-art sprites with high precision.",
   },
   {
-    year: 2022,
-    title: "Game Engine Plugins",
-    description: "Released integration plugins for Unity, Unreal, and Godot engines.",
+    year: "Module 4",
+    title: "Training & Optimization",
+    description: "Trained the AI model on processed data and refined outputs.",
     details:
-      "To streamline workflow for developers, we created native plugins for popular game engines that allow direct import and animation of sprites created with our platform.",
+      "Leveraged deep learning techniques to enhance sprite generation quality, ensuring consistent and accurate results across multiple art styles.",
   },
   {
-    year: 2023,
-    title: "Animation Tools",
-    description: "Added advanced animation capabilities to our conversion platform.",
+    year: "Module 5",
+    title: "Platform Launch & Post-Processing",
+    description: "Released the web-based Art2Sprite platform with post-processing tools.",
     details:
-      "Expanded our technology to not just convert static art to sprites, but to also create animation sequences and sprite sheets with intelligent frame interpolation.",
+      "Launched a user-friendly interface, allowing artists to fine-tune AI-generated sprites, apply enhancements, and validate outputs before use in digital projects.",
   },
-  {
-    year: 2024,
-    title: "Mobile App Release",
-    description: "Launched mobile applications for on-the-go sprite creation.",
-    details:
-      "Our iOS and Android apps brought the power of Art2Sprite to mobile devices, allowing artists to sketch on their tablets and instantly convert to game-ready sprites.",
-  },
-]
+];
 
 const PixelIcon = ({ progress }: { progress: number }) => (
   <svg

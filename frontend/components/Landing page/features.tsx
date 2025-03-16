@@ -23,14 +23,14 @@ const features = [
   },
   {
     icon: <Code className="h-10 w-10" />,
-    title: "Game Engine Plugins",
-    description: "Seamlessly integrate with Unity, Unreal, and Godot with our native plugins.",
+    title: "Sprite Sheet Generation",
+    description: "Automatically compile sprites into organized sprite sheets.",
     details:
-      "Our plugins allow direct import and real-time updates of sprites created with our platform. Make changes to your art and see them instantly reflected in your game, streamlining your development workflow.",
+      "Save time with our AI-driven sprite sheet generator, which optimizes layout and spacing for game development, animation, and other digital media applications.",
   },
   {
     icon: <Smartphone className="h-10 w-10" />,
-    title: "Mobile Creation",
+    title: "Create Anywhere",
     description: "Design on the go with our iOS and Android apps for on-the-fly sprite creation.",
     details:
       "Sketch ideas anywhere and instantly convert them to game-ready sprites. Our mobile apps include all the core functionality of the desktop platform, optimized for touch interfaces and on-the-go creativity.",

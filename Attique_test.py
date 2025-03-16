@@ -32,7 +32,7 @@ from data import create_dataset
 from models import create_model
 from util.visualizer import save_images
 from util import html
-
+import torch
 def remove_every_third_image(folder_path):
     try:
         # Get a sorted list of files in the folder

@@ -4,3 +4,11 @@ python3 test.py --dataroot /home/pierro/Desktop/Art2Sprite/preprocessedSketches/
                 --direction AtoB \
                 --results_dir /home/pierro/Desktop/Art2Sprite \
                 --gpu_ids -1
+
+
+& C:/Users/matti/anaconda3/envs/fyp2/python.exe test.py --dataroot D:\Art2Sprite\preprocessedSketches\ 
+                                                                --name pix2pix_experiment 
+                                                                --model pix2pix 
+                                                                --direction AtoB 
+                                                                --results_dir D:\Art2Sprite
+                                                                --gpu_ids -1

@@ -1,0 +1,2 @@
+checkpoints/pix2pix_experiment/latest_net_G.pth filter=lfs diff=lfs merge=lfs -text
+checkpoints/sprite2idle/latest_net_G.pth filter=lfs diff=lfs merge=lfs -text

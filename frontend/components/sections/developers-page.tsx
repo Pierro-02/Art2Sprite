@@ -27,7 +27,7 @@ const teamMembers = [
     bio: "Computer Science graduate with a solid foundation in full-stack development and a passion for Game Development. Experienced in building responsive web applications, Integrating AI models, and mobile games. Proficient in technologies such as Typescript, Nodejs, React, C++, Go, C# and Unity.",
     github: "https://github.com/Pierro-02",
     linkedin: "http://linkedin.com/in/mtaim/",
-    resume: "/assets/Resume-M.Taimur Aamir.pdf", // Replace with actual resume PDF
+    resume: "/Developers_info/Resume-M.Taimur Aamir.pdf", // Replace with actual resume PDF
     email: "taimuraamir0302@gmail.com",
   },
   {
@@ -35,10 +35,10 @@ const teamMembers = [
     name: "Rayyan Zia",
     role: "Developer",
     image: "/Developers_info/rayyanspic.png",
-    bio: ".",
+    bio: "Computer Science graduate with a passion for innovative full stack web and software development, AI Integration, and creative solutions. Experienced in hands-on project development, I enjoy exploring new technologies and implementing that new knowledge into a functioning project following a complete development lifecycle.",
     github: "https://github.com/RndmRyan",
     linkedin: "https://www.linkedin.com/in/rayyanzia/",
-    resume: "/placeholder.svg", // Replace with actual resume PDF
+    resume: "/Developers_info/Rayyan_Resume.pdf", // Replace with actual resume PDF
     email: "rayyanzia2944@gmail.com",
   },
  

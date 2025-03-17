@@ -7,7 +7,7 @@ import { getBasicSprite, getAnimatedSprite } from "@/api/newsprite"
 import { Sparkles, Upload, Wand2, RefreshCw } from "lucide-react"
 import { ImageUpload } from "@/components/ImageUpload"
 import { SpriteOutput } from "./sprite-output"
-import { getSprite } from "@/api/sprite"
+import { getSprite, getSpriteSheet } from "@/api/sprite"
 
 
 const idle = "/assets/idle.gif"
@@ -58,25 +58,25 @@ export function Hero() {
     }
   }
 
-  // const onCreateAnimatedSprite = async () => {
-  //   if (imageUploaded && basicSpriteUrl) {
-  //     setIsLoadingAnimated(true)
-  //     // Clear any existing animated sprite to show loading animation
-  //     setAnimatedSpriteUrl(null)
-  //     try {
-  //       const result = await getAnimatedSprite(imageUploaded, animationType)
-  //       if (result) {
-  //         const blobURL = await getImageAsBlobURL(result.sprite_url || "/placeholder.svg?height=192&width=384")
-  //         setAnimatedSpriteUrl(blobURL)
-  //         console.log(`Animated sprite generated: ${result.message}`)
-  //       }
-  //     } catch (error) {
-  //       console.error("Error generating animated sprite:", error)
-  //     } finally {
-  //       setIsLoadingAnimated(false)
-  //     }
-  //   }
-  // }
+  const onCreateAnimatedSprite = async () => {
+    if (imageUploaded && basicSpriteUrl) {
+      setIsLoadingAnimated(true)
+      // Clear any existing animated sprite to show loading animation
+      setAnimatedSpriteUrl(null)
+      try {
+        const result = await getSpriteSheet(animationType)
+        if (result) {
+          const blobURL = await getImageAsBlobURL(BACKEND_URL + result.results_dir || "/placeholder.svg?height=192&width=384")
+          setAnimatedSpriteUrl(blobURL)
+          console.log(`Animated sprite generated: ${result.message}`)
+        }
+      } catch (error) {
+        console.error("Error generating animated sprite:", error)
+      } finally {
+        setIsLoadingAnimated(false)
+      }
+    }
+  }
 
   const handleAnimationTypeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setAnimationType(event.target.value)
@@ -95,8 +95,8 @@ export function Hero() {
   // Example sprite sheets for different animation types
   const exampleSprites = [
     { type: "idle", url: idle },
-    { type: "Running", url: run },
-    { type: "jumping", url: jump },
+    { type: "running", url: run },
+    { type: "jump", url: jump },
   ]
 
   return (
@@ -248,7 +248,7 @@ export function Hero() {
               >
                 <option value="idle">Idle</option>
                 <option value="walking">Walking</option>
-                <option value="jumping">Jumping</option>
+                <option value="jump">Jumping</option>
               </select>
             </motion.div>
 
@@ -264,7 +264,7 @@ export function Hero() {
                     : "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg shadow-blue-500/20"
                 }`}
               disabled={!basicSpriteUrl || isLoadingAnimated}
-            // onClick={onCreateAnimatedSprite}
+              onClick={onCreateAnimatedSprite}
             >
               {isLoadingAnimated ? (
                 <>

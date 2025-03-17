@@ -3,11 +3,11 @@ import os
 import sys
 from uuid import uuid4
 from fastapi import APIRouter, Body, File, HTTPException, UploadFile, requests
-from services.generation_service import generateSprite
+from services.generation_service import generateSprite, generateSpriteSheet
 from services.processing_service import downscale32, prepareSketch, removeBackground
 from models.user import User, UserCreate
 from services.user_service import create_user
-from models.processing import ImageFile
+from models.processing import AnimationRequest, ImageFile
 from PIL import Image
 
 router = APIRouter()
@@ -19,7 +19,7 @@ def register_user(user: UserCreate):
 
 @router.post("/create-sprite")
 async def create_sprite(img: UploadFile = File(...)):
-    unique_filename = f"out_sprite.png"
+    unique_filename = "out_sprite.png"
     output_path = os.path.join(STATIC_FOLDER, unique_filename)
     if os.path.exists(output_path):
         os.remove(output_path)
@@ -52,6 +52,23 @@ async def create_sprite(img: UploadFile = File(...)):
         raise HTTPException(status_code=500, detail=f"Error processing image: {e}")
 
 
-@router.post("/create-animation", response_model=ImageFile)
-def create_animation(img: ImageFile):
-    pass
+@router.post("/create-animation")
+async def create_animation(request: AnimationRequest):
+    print("Creating Sprite Sheet")
+
+    try:
+        sheet_name = "out_sheet.png"
+        sprite_name = "out_sprite.png"
+        sprite_path = os.path.join(STATIC_FOLDER, sprite_name)
+        sprite_img = Image.open(sprite_path)
+        rescaled_sprite = downscale32(sprite_img)
+        sprite_sheet = generateSpriteSheet(rescaled_sprite, request.animationType)
+        sheet_path = os.path.join(STATIC_FOLDER, sheet_name)
+        sprite_sheet.save(sheet_path)
+
+        return {
+            "message": "Sprite Sheet Created!",
+            "results_dir": sheet_path
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error processing image: {e}")

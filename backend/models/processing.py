@@ -19,3 +19,6 @@ class SpriteSheetRequest(BaseModel):
 class SpriteSheetResponse(BaseModel):
     id: int
     spriteSheet: ImageFile
+
+class AnimationRequest(BaseModel):
+    animationType: str

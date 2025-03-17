@@ -15,7 +15,13 @@ def downscale32(img: Image):
         print("Error: Could Not Downscale Image: {e}")
         return None
 
-def removeBackground(img: Image) -> Image:
+def removeBackground(img: Image, threshold: int = 23) -> Image:
+    """
+    img: Image
+    threshold: the threshold to convert transparent
+    example default value 23 means all pixel values 
+    below and including 23 will turn transparent
+    """
     print("Removing Background") 
     try:
         if img.mode != "RGBA":

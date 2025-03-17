@@ -13,7 +13,7 @@ from util.util import tensor2im
 
 STATIC_FOLDER = "static"
 
-def generateSpriteSheet(img: Image, animationType: str) -> str:
+def generateSpriteSheet(img: Image, animationType: str, threshold: int = 23):
     """
     imgUrl -> (Sprite url)
     animationType -> (idle, walking, jump)
@@ -42,7 +42,7 @@ def generateSpriteSheet(img: Image, animationType: str) -> str:
     base_frames = [base_image.crop((i * frame_width, 0, (i + 1) * frame_width, frame_height))
               for i in range(num_frames)]
 
-    base_image = removeBackground(base_image)
+    base_image = removeBackground(base_image, threshold)
 
     target_sprite = img
 
@@ -95,11 +95,9 @@ def generateSpriteSheet(img: Image, animationType: str) -> str:
                         new_pixels[x, y] = (0, 0, 0, 0)
             new_sprite_sheet.paste(new_frame, (i * frame_width, 0))
 
-        resultUrl = os.path.join(STATIC_FOLDER, f'temp_{animationType}.png')
         new_sprite_sheet = removeBackground(new_sprite_sheet)
-        new_sprite_sheet.save(resultUrl)
         print("Created animation")
-        return resultUrl 
+        return new_sprite_sheet 
     except Exception as e:
         print("Error processing sprite image for animation" + ": ", e)
         return None

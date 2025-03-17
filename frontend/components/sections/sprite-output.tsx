@@ -203,8 +203,8 @@ export function SpriteOutput({
               <Image
                 src={animatedSpriteUrl || "/placeholder.svg"}
                 alt="Animated Sprite Sheet"
-                width={300}
-                height={150}
+                width={150}
+                height={100}
                 style={{ objectFit: "contain" }}
                 className="rounded-md"
               />

@@ -4,7 +4,7 @@ import sys
 from uuid import uuid4
 from fastapi import APIRouter, Body, File, HTTPException, UploadFile, requests
 from services.generation_service import generateSprite, generateSpriteSheet
-from services.processing_service import downscale32, prepareSketch, removeBackground
+from services.processing_service import downscale32, prepareSketch, removeBackground, splitSpriteSheet
 from models.user import User, UserCreate
 from services.user_service import create_user
 from models.processing import AnimationRequest, ImageFile
@@ -65,10 +65,15 @@ async def create_animation(request: AnimationRequest):
         sprite_sheet = generateSpriteSheet(rescaled_sprite, request.animationType)
         sheet_path = os.path.join(STATIC_FOLDER, sheet_name)
         sprite_sheet.save(sheet_path)
+        frame_folder = os.path.join(STATIC_FOLDER, "frames")
+        if not os.path.exists(frame_folder):
+            os.mkdir(frame_folder)
+        frame_paths = splitSpriteSheet(sprite_sheet, frame_folder)
 
         return {
             "message": "Sprite Sheet Created!",
-            "results_dir": sheet_path
+            "results_dir": sheet_path,
+            "frame_paths": frame_paths
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error processing image: {e}")

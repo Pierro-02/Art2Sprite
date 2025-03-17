@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import { getBasicSprite, getAnimatedSprite } from "@/api/newsprite"
 import { Sparkles, Upload, Wand2, RefreshCw } from "lucide-react"
@@ -14,6 +14,7 @@ const idle = "/assets/idle.gif"
 const jump = "/assets/jump.gif"
 const run = "/assets/walking.gif"
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL + "/"
+const FRAME_RATE = 300
 
 export function Hero() {
   const [imageUploaded, setImageUploaded] = useState<File | null>(null)
@@ -22,6 +23,8 @@ export function Hero() {
   const [animatedSpriteUrl, setAnimatedSpriteUrl] = useState<string | null>(null)
   const [isLoadingBasic, setIsLoadingBasic] = useState(false)
   const [isLoadingAnimated, setIsLoadingAnimated] = useState(false)
+  const [spriteFramesUrls, setSpriteFramesUrls] = useState<string[] | null>([])
+  const [currentFrame, setCurrentFrame] = useState(0)
 
   const getImageAsBlobURL = async (filePath: string): Promise<string | null> => {
     try {
@@ -63,11 +66,17 @@ export function Hero() {
       setIsLoadingAnimated(true)
       // Clear any existing animated sprite to show loading animation
       setAnimatedSpriteUrl(null)
+      setSpriteFramesUrls(null)
       try {
         const result = await getSpriteSheet(animationType)
         if (result) {
           const blobURL = await getImageAsBlobURL(BACKEND_URL + result.results_dir || "/placeholder.svg?height=192&width=384")
           setAnimatedSpriteUrl(blobURL)
+          const framePaths = await Promise.all(
+            result.frame_paths.map((framePath) => getImageAsBlobURL(BACKEND_URL + framePath))
+          );
+          setSpriteFramesUrls(framePaths.filter((path): path is string => path !== null))
+          console.log("Sprite Frame: ", result.frame_paths)
           console.log(`Animated sprite generated: ${result.message}`)
         }
       } catch (error) {
@@ -91,6 +100,17 @@ export function Hero() {
     setAnimatedSpriteUrl(null)
     setAnimationType("idle")
   }
+
+  useEffect(() => {
+    if (spriteFramesUrls == null) return
+    if (spriteFramesUrls.length == 0) return;
+
+    const interval = setInterval(() => {
+      setCurrentFrame((prevFrame) => (prevFrame + 1) % spriteFramesUrls.length)
+    }, FRAME_RATE);
+
+    return () => clearInterval(interval)
+  }, [spriteFramesUrls])
 
   // Example sprite sheets for different animation types
   const exampleSprites = [
@@ -294,7 +314,7 @@ export function Hero() {
           {/* Right Panel (Output and Examples) */}
           <SpriteOutput
             basicSpriteUrl={basicSpriteUrl}
-            animatedSpriteUrl={animatedSpriteUrl}
+            animatedSpriteUrl={spriteFramesUrls ? spriteFramesUrls[currentFrame] : animatedSpriteUrl}
             isLoadingBasic={isLoadingBasic}
             isLoadingAnimated={isLoadingAnimated}
             exampleSprites={exampleSprites}

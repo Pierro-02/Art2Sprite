@@ -60,13 +60,22 @@ def prepareSketch(sketch: Image) -> Image:
         print(f"Error While Preparing Image: {e}")
         return None
 
-def remove_every_third_image(folder_path):
-    try:
-        files = sorted([f for f in os.listdir(folder_path) if os.path.isfile(os.path.join(folder_path, f))])
-        for index, file in enumerate(files, start=1):
-            if index % 3 == 0:
-                file_path = os.path.join(folder_path, file)
-                os.remove(file_path)
-    except Exception as e:
-        print(f"An error occurred: {e}")
+def splitSpriteSheet(sprite_sheet: Image, out_path: str, frame_width: int = 32, frame_height: int = 32):
+    sheet_width, sheet_height = sprite_sheet.size
+    frame_paths = []
+    
+    if not os.path.exists(out_path):
+        os.mkdir(out_path)
+
+    # Calculate number of frames (assuming a single row of frames)
+    num_frames = sheet_width // frame_width  
+
+    for i in range(num_frames):
+        # Crop each frame
+        file_path = os.path.join(out_path, f"frame_{i + 1}.png")
+        frame = sprite_sheet.crop((i * frame_width, 0, (i + 1) * frame_width, frame_height))
+        frame.save(file_path)
+        frame_paths.append(file_path)
+
+    return frame_paths
     

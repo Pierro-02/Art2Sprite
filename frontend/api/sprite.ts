@@ -5,6 +5,12 @@ interface UploadResponse {
     results_dir: string
 }
 
+interface SpriteSheetResponse {
+    message: string
+    results_dir: string
+    frame_paths: string[]
+}
+
 export async function getSprite(file: File): Promise<UploadResponse | null> {
     const API = BACKEND_URL + 'user/create-sprite'
     const formData = new FormData()
@@ -28,7 +34,7 @@ export async function getSprite(file: File): Promise<UploadResponse | null> {
     }
 }
 
-export async function getSpriteSheet(animationType: string): Promise<UploadResponse | null> {
+export async function getSpriteSheet(animationType: string): Promise<SpriteSheetResponse | null> {
     const API = BACKEND_URL + 'user/create-animation'
     try {
         const response = await fetch(API, {
@@ -43,7 +49,7 @@ export async function getSpriteSheet(animationType: string): Promise<UploadRespo
             throw new Error(`Error: ${response.status} ${response.statusText}`)
         }
 
-        const result: UploadResponse = await response.json();
+        const result: SpriteSheetResponse = await response.json();
         console.log('Upload Successful: ', result)
         return result
     } catch (error) {

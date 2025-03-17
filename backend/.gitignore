@@ -99,3 +99,5 @@ pix2pix_experiment/
 wandb/
 # Ignore node modules
 node_modules/
+
+static/out_sprite.png

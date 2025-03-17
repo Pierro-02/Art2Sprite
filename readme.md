@@ -17,6 +17,8 @@ Run the following command in the root directory to set up the front end and the 
 
 ### For Windows
 
+Any **ONE** of the following will work:
+
 1. Simply double click the setup.bat
 2. Open cmd and run
 

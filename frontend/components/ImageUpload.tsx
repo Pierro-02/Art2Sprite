@@ -6,7 +6,7 @@ import { useState, useEffect } from "react"
 import { Upload } from "lucide-react"
 
 interface ImageUploadProps {
-  imageUploaded: (imageData: string) => void
+  imageUploaded: (imageData: File) => void
   resetImage?: boolean
 }
 
@@ -48,15 +48,8 @@ export function ImageUpload({ imageUploaded, resetImage = false }: ImageUploadPr
   }
 
   const processFile = (file: File) => {
-    const reader = new FileReader()
-
-    reader.onload = (e) => {
-      const result = e.target?.result as string
-      setPreviewUrl(result)
-      imageUploaded(result)
-    }
-
-    reader.readAsDataURL(file)
+    setPreviewUrl(URL.createObjectURL(file))
+    imageUploaded(file)
   }
 
   return (

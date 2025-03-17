@@ -1,13 +1,15 @@
 import sys
 from fastapi import FastAPI, HTTPException, File, UploadFile
 import os
-from services.processing_service import remove_every_third_image, removeBackground
+
+import numpy as np
+import torch
+from services.processing_service import removeBackground
 from options.test_options import TestOptions
 from data import create_dataset
 from models import create_model
-from util.visualizer import save_images
-from util import html
 from PIL import Image
+from util.util import tensor2im
 
 STATIC_FOLDER = "static"
 
@@ -103,14 +105,15 @@ def generateSpriteSheet(img: Image, animationType: str) -> str:
         return None
     
 
-def generateSprite(image_path: str):       
+def generateSprite(image_path: str = ""):    
+    print("Generating Sprite")   
     sys.argv = [
             "single_test.py",  # Mock the script name
-            "--dataroot", image_path,
+            "--dataroot", STATIC_FOLDER,
             "--name", "pix2pix_experiment",
             "--model", "pix2pix",
             "--direction", "AtoB",
-            "--results_dir", "/home/pierro/Desktop",
+            "--results_dir", image_path,
             "--gpu_ids", "-1",
         ]
 
@@ -129,8 +132,6 @@ def generateSprite(image_path: str):
         # Run inference
         if opt.eval:
             model.eval()
-
-        output_path = output_path = os.path.join(opt.results_dir, "output.png")
         
         for i, data in enumerate(dataset):
             if i > 0:  # Only process one image
@@ -138,16 +139,13 @@ def generateSprite(image_path: str):
             model.set_input(data)
             model.test()
             visuals = model.get_current_visuals()
-
-            # Extract the first image
+            j = 0
             for label, image in visuals.items():
-                image_pil = Image.fromarray(image)  # Convert to PIL Image if needed
-                image_pil.save(output_path)  
-
-        # Remove every third image
-        # folder_path = os.path.join(opt.results_dir, opt.name, "test_latest/images")
-        # remove_every_third_image(folder_path)
-
-        return {"message": "Inference completed successfully", "image_url": f"/static/output_sheet.png"}
+                image_pil = Image.fromarray(tensor2im(image))  # Convert to PIL Image
+                if (j == 1):
+                    print("Sprite Successfully Generated")
+                    return image_pil
+                j += 1
     except Exception as e:
+        print(f"Error Generating Sprite: {e}")
         raise HTTPException(status_code=500, detail=str(e))

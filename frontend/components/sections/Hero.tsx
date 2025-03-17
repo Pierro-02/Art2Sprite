@@ -7,14 +7,16 @@ import { getBasicSprite, getAnimatedSprite } from "@/api/newsprite"
 import { Sparkles, Upload, Wand2, RefreshCw } from "lucide-react"
 import { ImageUpload } from "@/components/ImageUpload"
 import { SpriteOutput } from "./sprite-output"
+import { getSprite } from "@/api/sprite"
 
 
 const idle = "/assets/idle.gif"
 const jump = "/assets/jump.gif"
 const run = "/assets/walking.gif"
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL + "/"
 
 export function Hero() {
-  const [imageUploaded, setImageUploaded] = useState<string | null>(null)
+  const [imageUploaded, setImageUploaded] = useState<File | null>(null)
   const [animationType, setAnimationType] = useState("idle")
   const [basicSpriteUrl, setBasicSpriteUrl] = useState<string | null>(null)
   const [animatedSpriteUrl, setAnimatedSpriteUrl] = useState<string | null>(null)
@@ -41,9 +43,10 @@ export function Hero() {
       // Clear any existing sprite to show loading animation
       setBasicSpriteUrl(null)
       try {
-        const result = await getBasicSprite(imageUploaded)
+        const result = await getSprite(imageUploaded)
         if (result) {
-          const blobURL = await getImageAsBlobURL(result.sprite_url || "/placeholder.svg?height=192&width=192")
+          console.log(result.results_dir)
+          const blobURL = await getImageAsBlobURL(BACKEND_URL + result.results_dir || "/placeholder.svg?height=192&width=192")
           setBasicSpriteUrl(blobURL)
           console.log(`Basic sprite generated: ${result.message}`)
         }
@@ -55,25 +58,25 @@ export function Hero() {
     }
   }
 
-  const onCreateAnimatedSprite = async () => {
-    if (imageUploaded && basicSpriteUrl) {
-      setIsLoadingAnimated(true)
-      // Clear any existing animated sprite to show loading animation
-      setAnimatedSpriteUrl(null)
-      try {
-        const result = await getAnimatedSprite(imageUploaded, animationType)
-        if (result) {
-          const blobURL = await getImageAsBlobURL(result.sprite_url || "/placeholder.svg?height=192&width=384")
-          setAnimatedSpriteUrl(blobURL)
-          console.log(`Animated sprite generated: ${result.message}`)
-        }
-      } catch (error) {
-        console.error("Error generating animated sprite:", error)
-      } finally {
-        setIsLoadingAnimated(false)
-      }
-    }
-  }
+  // const onCreateAnimatedSprite = async () => {
+  //   if (imageUploaded && basicSpriteUrl) {
+  //     setIsLoadingAnimated(true)
+  //     // Clear any existing animated sprite to show loading animation
+  //     setAnimatedSpriteUrl(null)
+  //     try {
+  //       const result = await getAnimatedSprite(imageUploaded, animationType)
+  //       if (result) {
+  //         const blobURL = await getImageAsBlobURL(result.sprite_url || "/placeholder.svg?height=192&width=384")
+  //         setAnimatedSpriteUrl(blobURL)
+  //         console.log(`Animated sprite generated: ${result.message}`)
+  //       }
+  //     } catch (error) {
+  //       console.error("Error generating animated sprite:", error)
+  //     } finally {
+  //       setIsLoadingAnimated(false)
+  //     }
+  //   }
+  // }
 
   const handleAnimationTypeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setAnimationType(event.target.value)
@@ -177,7 +180,7 @@ export function Hero() {
               className="border-dashed border-2 border-gray-600 rounded-lg p-4 mb-8 bg-gray-800/50 transition-all duration-300"
             >
               <ImageUpload
-                imageUploaded={(uploaded: string) => setImageUploaded(uploaded)}
+                imageUploaded={(uploaded: File) => setImageUploaded(uploaded)}
                 resetImage={!imageUploaded}
               />
             </motion.div>
@@ -261,7 +264,7 @@ export function Hero() {
                     : "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg shadow-blue-500/20"
                 }`}
               disabled={!basicSpriteUrl || isLoadingAnimated}
-              onClick={onCreateAnimatedSprite}
+            // onClick={onCreateAnimatedSprite}
             >
               {isLoadingAnimated ? (
                 <>

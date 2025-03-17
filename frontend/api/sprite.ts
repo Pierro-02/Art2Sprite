@@ -3,12 +3,13 @@ interface UploadResponse {
     results_dir: string
 }
 
-export async function getSprite(file: string): Promise<UploadResponse | null> {
+export async function getSprite(file: File): Promise<UploadResponse | null> {
+    const formData = new FormData()
+    formData.append("img", file)
     try {
-        const response = await fetch('http://localhost:8000/run-inference', {
+        const response = await fetch('http://localhost:8000/user/create-sprite', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ file: file })
+            body: formData
         })
 
         if (!response.ok) {

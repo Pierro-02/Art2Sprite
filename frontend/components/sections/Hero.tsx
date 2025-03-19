@@ -314,6 +314,7 @@ export function Hero() {
           <SpriteOutput
             basicSpriteUrl={basicSpriteUrl}
             animatedSpriteUrl={spriteFramesUrls ? spriteFramesUrls[currentFrame] : animatedSpriteUrl}
+            animatedDownloadUrl={animatedSpriteUrl}
             isLoadingBasic={isLoadingBasic}
             isLoadingAnimated={isLoadingAnimated}
             exampleSprites={exampleSprites}

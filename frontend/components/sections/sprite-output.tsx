@@ -1,8 +1,8 @@
-"use client"
-import { motion } from "framer-motion"
-import Image from "next/image"
-import { ImageIcon, Download, Sparkles } from "lucide-react"
-import { SpriteExamples } from "./sprite-examples"
+"use client";
+import { motion } from "framer-motion";
+import Image from "next/image";
+import { ImageIcon, Download, Sparkles } from "lucide-react";
+import { SpriteExamples } from "./sprite-examples";
 
 // Add a loading animation component to the sprite-output.tsx file
 
@@ -13,51 +13,65 @@ function LoadingAnimation() {
       <motion.div
         className="w-16 h-16 relative"
         animate={{ rotate: 360 }}
-        transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+        transition={{
+          duration: 2,
+          repeat: Number.POSITIVE_INFINITY,
+          ease: "linear",
+        }}
       >
         <motion.div
           className="absolute top-0 left-0 right-0 bottom-0 border-4 border-t-blue-500 border-r-transparent border-b-transparent border-l-transparent rounded-full"
           animate={{ rotate: 360 }}
-          transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+          transition={{
+            duration: 1.5,
+            repeat: Number.POSITIVE_INFINITY,
+            ease: "linear",
+          }}
         />
         <motion.div
           className="absolute top-2 left-2 right-2 bottom-2 border-4 border-t-purple-500 border-r-transparent border-b-transparent border-l-transparent rounded-full"
           animate={{ rotate: -360 }}
-          transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+          transition={{
+            duration: 2,
+            repeat: Number.POSITIVE_INFINITY,
+            ease: "linear",
+          }}
         />
       </motion.div>
-      <p className="text-blue-400 mt-4 text-sm font-medium">Generating sprite...</p>
+      <p className="text-blue-400 mt-4 text-sm font-medium">
+        Generating sprite...
+      </p>
     </div>
-  )
+  );
 }
 
 interface SpriteOutputProps {
-  basicSpriteUrl: string | null
-  animatedSpriteUrl: string | null
-  isLoadingBasic: boolean
-  isLoadingAnimated: boolean
-  exampleSprites: { type: string; url: string }[]
+  basicSpriteUrl: string | null;
+  animatedSpriteUrl: string | null;
+  isLoadingBasic: boolean;
+  isLoadingAnimated: boolean;
+  exampleSprites: { type: string; url: string }[];
 }
 
 // Update the getImageAsBlobURL function to handle placeholder URLs
 const getImageAsBlobURL = async (url: string): Promise<string> => {
   // If it's already a blob URL or a placeholder, return it directly
   if (url.startsWith("blob:") || url.includes("placeholder.svg")) {
-    return url
+    return url;
   }
 
   try {
-    const response = await fetch(url)
+    const response = await fetch(url);
     if (!response.ok) {
-      throw new Error("Failed to load image")
+      throw new Error("Failed to load image");
     }
-    const blob = await response.blob()
-    return URL.createObjectURL(blob)
+    const blob = await response.blob();
+    return URL.createObjectURL(blob);
   } catch (error) {
-    console.error("Error loading image:", error)
-    return "/placeholder.svg?height=192&width=192"
+    console.error("Error loading image:", error);
+    return "/placeholder.svg?height=192&width=192";
   }
-}
+};
 
 export function SpriteOutput({
   basicSpriteUrl,
@@ -65,21 +79,22 @@ export function SpriteOutput({
   isLoadingBasic,
   isLoadingAnimated,
   exampleSprites,
+  animatedDownloadUrl,
 }: SpriteOutputProps) {
   const handleDownload = async (url: string | null, filename: string) => {
     if (url) {
       // For placeholder images, we need to fetch them first
-      const downloadUrl = await getImageAsBlobURL(url)
+      const downloadUrl = await getImageAsBlobURL(url);
 
       // Create an anchor element and trigger download
-      const a = document.createElement("a")
-      a.href = downloadUrl
-      a.download = filename
-      document.body.appendChild(a)
-      a.click()
-      document.body.removeChild(a)
+      const a = document.createElement("a");
+      a.href = downloadUrl;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
     }
-  }
+  };
 
   return (
     <motion.div
@@ -116,7 +131,9 @@ export function SpriteOutput({
           initial={{ opacity: 0.8 }}
           animate={{
             opacity: 1,
-            boxShadow: basicSpriteUrl ? "0 0 15px rgba(59, 130, 246, 0.3)" : "none",
+            boxShadow: basicSpriteUrl
+              ? "0 0 15px rgba(59, 130, 246, 0.3)"
+              : "none",
           }}
           className="border-2 border-gray-700 rounded-lg p-4 h-[180px] flex items-center justify-center bg-gray-800/50 relative overflow-hidden"
         >
@@ -140,7 +157,9 @@ export function SpriteOutput({
             </motion.div>
           ) : (
             <div className="text-center">
-              <p className="text-blue-400 mb-2">Your basic sprite will appear here</p>
+              <p className="text-blue-400 mb-2">
+                Your basic sprite will appear here
+              </p>
               <motion.div
                 animate={{
                   y: [0, -10, 0],
@@ -166,15 +185,19 @@ export function SpriteOutput({
             <div className="p-2 rounded-lg bg-gradient-to-br from-purple-600 to-purple-400 mr-3">
               <ImageIcon className="w-5 h-5 text-white" />
             </div>
-            <h2 className="text-xl font-semibold text-white">Animated Sprite Sheet</h2>
+            <h2 className="text-xl font-semibold text-white">
+              Animated Sprite Sheet
+            </h2>
           </div>
 
           {/* Download button for animated sprite */}
-          {animatedSpriteUrl && (
+          {animatedDownloadUrl && (
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => handleDownload(animatedSpriteUrl, "animated-sprite.png")}
+              onClick={() =>
+                handleDownload(animatedDownloadUrl, "animated-sprite.png")
+              }
               className="flex items-center gap-2 bg-gradient-to-r from-purple-600 to-purple-500 hover:from-purple-700 hover:to-purple-600 text-white py-2 px-4 rounded-md shadow-md"
             >
               <Download className="w-4 h-4" />
@@ -187,7 +210,9 @@ export function SpriteOutput({
           initial={{ opacity: 0.8 }}
           animate={{
             opacity: 1,
-            boxShadow: animatedSpriteUrl ? "0 0 15px rgba(124, 58, 237, 0.3)" : "none",
+            boxShadow: animatedSpriteUrl
+              ? "0 0 15px rgba(124, 58, 237, 0.3)"
+              : "none",
           }}
           className="border-2 border-gray-700 rounded-lg p-4 h-[180px] flex items-center justify-center bg-gray-800/50 relative overflow-hidden"
         >
@@ -211,7 +236,9 @@ export function SpriteOutput({
             </motion.div>
           ) : basicSpriteUrl ? (
             <div className="text-center">
-              <p className="text-purple-400 mb-2">Select an animation type and generate your animated sprite</p>
+              <p className="text-purple-400 mb-2">
+                Select an animation type and generate your animated sprite
+              </p>
               <motion.div
                 animate={{
                   y: [0, -10, 0],
@@ -228,7 +255,9 @@ export function SpriteOutput({
             </div>
           ) : (
             <div className="text-center">
-              <p className="text-gray-500 mb-2">Generate a basic sprite first</p>
+              <p className="text-gray-500 mb-2">
+                Generate a basic sprite first
+              </p>
             </div>
           )}
         </motion.div>
@@ -252,10 +281,10 @@ export function SpriteOutput({
           Pro Tips
         </h3>
         <p className="text-gray-400 text-sm">
-          For best results, use clear line art with distinct features. Simple sketches work better than complex ones.
+          For best results, use clear line art with distinct features. Simple
+          sketches work better than complex ones.
         </p>
       </motion.div>
     </motion.div>
-  )
+  );
 }
-

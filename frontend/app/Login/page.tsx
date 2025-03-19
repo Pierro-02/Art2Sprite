@@ -1,11 +1,11 @@
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Github } from "lucide-react"
-import Link from "next/link"
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Github } from "lucide-react";
+import Link from "next/link";
 
 export default function LoginPage() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   return (
-    
     <div className="flex min-h-screen bg-black">
       {/* Left Section */}
       <div className="relative hidden w-1/2 p-8 lg:block">
@@ -15,12 +15,16 @@ export default function LoginPage() {
               <h1 className="text-2xl font-semibold">Art2Sprite</h1>
             </div>
             <h2 className="mb-6 text-4xl font-bold">Welcome Back</h2>
-            <p className="mb-12 text-lg">Log in to your account to continue your journey.</p>
+            <p className="mb-12 text-lg">
+              Log in to your account to continue your journey.
+            </p>
 
             <div className="w-full max-w-sm space-y-4">
               <div className="rounded-lg bg-white/10 p-4 backdrop-blur-sm">
                 <div className="flex items-center gap-4">
-                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-black">1</span>
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-black">
+                    1
+                  </span>
                   <span className="text-lg">Log in to your account</span>
                 </div>
               </div>
@@ -50,7 +54,9 @@ export default function LoginPage() {
         <div className="w-full max-w-md rounded-[40px] p-12">
           <div className="mx-auto max-w-sm">
             <h2 className="mb-2 text-3xl font-bold text-white">Log In</h2>
-            <p className="mb-8 text-gray-400">Enter your credentials to access your account.</p>
+            <p className="mb-8 text-gray-400">
+              Enter your credentials to access your account.
+            </p>
 
             <div className="mb-8 grid gap-4">
               <Button variant="outline" className="h-12">
@@ -105,16 +111,21 @@ export default function LoginPage() {
                   type="password"
                 />
                 <div className="flex justify-end">
-                  <a href="/forgot-password" className="text-sm text-gray-400 hover:text-white">
+                  <a
+                    href="/forgot-password"
+                    className="text-sm text-gray-400 hover:text-white"
+                  >
                     Forgot password?
                   </a>
                 </div>
               </div>
-                <Link href="/">
-              <Button className="h-12 w-full bg-white text-black hover:bg-gray-100">Log In</Button>
+              <Link href="/">
+                <Button className="h-12 w-full bg-white text-black hover:bg-gray-100">
+                  Log In
+                </Button>
               </Link>
               <p className="text-center text-sm text-gray-400">
-                Don't have an account?{" "}
+                Don&apos;t have an account?{" "}
                 <Link href="/Signup" className="text-white hover:underline">
                   Sign up
                 </Link>
@@ -124,6 +135,5 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }
-

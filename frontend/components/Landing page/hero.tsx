@@ -1,5 +1,4 @@
-import { Button } from "@/components/ui/button"
-import RainingLetters from "./raining-letters"
+import RainingLetters from "./raining-letters";
 
 export default function Hero() {
   return (
@@ -8,9 +7,6 @@ export default function Hero() {
       <div className="absolute inset-0 z-0">
         <RainingLetters />
       </div>
-
-     
-      </div>
-  )
+    </div>
+  );
 }
-

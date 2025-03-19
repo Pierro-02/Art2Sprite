@@ -3,7 +3,6 @@
 import type React from "react"
 import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
-import { getBasicSprite, getAnimatedSprite } from "@/api/newsprite"
 import { Sparkles, Upload, Wand2, RefreshCw } from "lucide-react"
 import { ImageUpload } from "@/components/ImageUpload"
 import { SpriteOutput } from "./sprite-output"

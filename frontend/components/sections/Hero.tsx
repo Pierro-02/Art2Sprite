@@ -1,128 +1,140 @@
-"use client"
+"use client";
 
-import type React from "react"
-import { useState, useEffect } from "react"
-import { motion } from "framer-motion"
-import { getSprite, getSpriteSheet } from "@/api/sprite"
-import { Sparkles, Upload, Wand2, RefreshCw } from "lucide-react"
-import { ImageUpload } from "@/components/ImageUpload"
-import { SpriteOutput } from "./sprite-output"
-import { ThemeProvider } from "./theme-context"
-import { ThemeToggle } from "./theme-toggle"
+import type React from "react";
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { getSprite, getSpriteSheet } from "@/api/sprite";
+import { Sparkles, Upload, Wand2, RefreshCw } from "lucide-react";
+import { ImageUpload } from "@/components/ImageUpload";
+import { SpriteOutput } from "./sprite-output";
+import { ThemeProvider } from "./theme-context";
+import { ThemeToggle } from "./theme-toggle";
 
-const idle = "/assets/idle.gif"
-const jump = "/assets/jump.gif"
-const run = "/assets/walking.gif"
+const idle = "/assets/idle.gif";
+const jump = "/assets/jump.gif";
+const run = "/assets/walking.gif";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL + "/"
-const FRAME_RATE = 300
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL + "/";
+const FRAME_RATE = 300;
 
 export function Hero() {
-  const [imageUploaded, setImageUploaded] = useState<File | null>(null)
-  const [animationType, setAnimationType] = useState("idle")
-  const [basicSpriteUrl, setBasicSpriteUrl] = useState<string | null>(null)
-  const [animatedSpriteUrl, setAnimatedSpriteUrl] = useState<string | null>(null)
-  const [isLoadingBasic, setIsLoadingBasic] = useState(false)
-  const [isLoadingAnimated, setIsLoadingAnimated] = useState(false)
-  const [spriteFramesUrls, setSpriteFramesUrls] = useState<string[] | null>([])
-  const [currentFrame, setCurrentFrame] = useState(0)
+  const [imageUploaded, setImageUploaded] = useState<File | null>(null);
+  const [animationType, setAnimationType] = useState("idle");
+  const [basicSpriteUrl, setBasicSpriteUrl] = useState<string | null>(null);
+  const [animatedSpriteUrl, setAnimatedSpriteUrl] = useState<string | null>(
+    null
+  );
+  const [isLoadingBasic, setIsLoadingBasic] = useState(false);
+  const [isLoadingAnimated, setIsLoadingAnimated] = useState(false);
+  const [spriteFramesUrls, setSpriteFramesUrls] = useState<string[] | null>([]);
+  const [currentFrame, setCurrentFrame] = useState(0);
 
-  const getImageAsBlobURL = async (filePath: string): Promise<string | null> => {
+  const getImageAsBlobURL = async (
+    filePath: string
+  ): Promise<string | null> => {
     try {
-      const response = await fetch(filePath)
+      const response = await fetch(filePath);
       if (!response.ok) {
-        throw new Error("Failed to load image")
+        throw new Error("Failed to load image");
       }
-      const blob = await response.blob()
-      return URL.createObjectURL(blob)
+      const blob = await response.blob();
+      return URL.createObjectURL(blob);
     } catch (error) {
-      console.error("Error loading image:", error)
-      return null
+      console.error("Error loading image:", error);
+      return null;
     }
-  }
+  };
 
   const onCreateBasicSprite = async () => {
     if (imageUploaded) {
-      setIsLoadingBasic(true)
+      setIsLoadingBasic(true);
       // Clear any existing sprite to show loading animation
-      setBasicSpriteUrl(null)
+      setBasicSpriteUrl(null);
       try {
-        const result = await getSprite(imageUploaded)
+        const result = await getSprite(imageUploaded);
         if (result) {
-          console.log(result.results_dir)
+          console.log(result.results_dir);
           const blobURL = await getImageAsBlobURL(
-            BACKEND_URL + result.results_dir || "/placeholder.svg?height=192&width=192",
-          )
-          setBasicSpriteUrl(blobURL)
-          console.log(`Basic sprite generated: ${result.message}`)
+            BACKEND_URL + result.results_dir ||
+              "/placeholder.svg?height=192&width=192"
+          );
+          setBasicSpriteUrl(blobURL);
+          console.log(`Basic sprite generated: ${result.message}`);
         }
       } catch (error) {
-        console.error("Error generating basic sprite:", error)
+        console.error("Error generating basic sprite:", error);
       } finally {
-        setIsLoadingBasic(false)
+        setIsLoadingBasic(false);
       }
     }
-  }
+  };
 
   const onCreateAnimatedSprite = async () => {
     if (imageUploaded && basicSpriteUrl) {
-      setIsLoadingAnimated(true)
+      setIsLoadingAnimated(true);
       // Clear any existing animated sprite to show loading animation
-      setAnimatedSpriteUrl(null)
-      setSpriteFramesUrls(null)
+      setAnimatedSpriteUrl(null);
+      setSpriteFramesUrls(null);
       try {
-        const result = await getSpriteSheet(animationType)
+        const result = await getSpriteSheet(animationType);
         if (result) {
           const blobURL = await getImageAsBlobURL(
-            BACKEND_URL + result.results_dir || "/placeholder.svg?height=192&width=384",
-          )
-          setAnimatedSpriteUrl(blobURL)
+            BACKEND_URL + result.results_dir ||
+              "/placeholder.svg?height=192&width=384"
+          );
+          setAnimatedSpriteUrl(blobURL);
           const framePaths = await Promise.all(
-            result.frame_paths.map((framePath) => getImageAsBlobURL(BACKEND_URL + framePath)),
-          )
-          setSpriteFramesUrls(framePaths.filter((path): path is string => path !== null))
-          console.log("Sprite Frame: ", result.frame_paths)
-          console.log(`Animated sprite generated: ${result.message}`)
+            result.frame_paths.map((framePath) =>
+              getImageAsBlobURL(BACKEND_URL + framePath)
+            )
+          );
+          setSpriteFramesUrls(
+            framePaths.filter((path): path is string => path !== null)
+          );
+          console.log("Sprite Frame: ", result.frame_paths);
+          console.log(`Animated sprite generated: ${result.message}`);
         }
       } catch (error) {
-        console.error("Error generating animated sprite:", error)
+        console.error("Error generating animated sprite:", error);
       } finally {
-        setIsLoadingAnimated(false)
+        setIsLoadingAnimated(false);
       }
     }
-  }
+  };
 
-  const handleAnimationTypeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setAnimationType(event.target.value)
+  const handleAnimationTypeChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setAnimationType(event.target.value);
     // Reset animated sprite when animation type changes
-    setAnimatedSpriteUrl(null)
-  }
+    setAnimatedSpriteUrl(null);
+  };
 
   // Function to reset all states and start over
   const handleRefresh = () => {
-    setImageUploaded(null)
-    setBasicSpriteUrl(null)
-    setAnimatedSpriteUrl(null)
-    setAnimationType("idle")
-  }
+    setImageUploaded(null);
+    setBasicSpriteUrl(null);
+    setAnimatedSpriteUrl(null);
+    setAnimationType("idle");
+  };
 
   useEffect(() => {
-    if (spriteFramesUrls == null) return
-    if (spriteFramesUrls.length == 0) return
+    if (spriteFramesUrls == null) return;
+    if (spriteFramesUrls.length == 0) return;
 
     const interval = setInterval(() => {
-      setCurrentFrame((prevFrame) => (prevFrame + 1) % spriteFramesUrls.length)
-    }, FRAME_RATE)
+      setCurrentFrame((prevFrame) => (prevFrame + 1) % spriteFramesUrls.length);
+    }, FRAME_RATE);
 
-    return () => clearInterval(interval)
-  }, [spriteFramesUrls])
+    return () => clearInterval(interval);
+  }, [spriteFramesUrls]);
 
   // Example sprite sheets for different animation types
   const exampleSprites = [
     { type: "idle", url: idle },
     { type: "walking", url: run },
     { type: "jumping", url: jump },
-  ]
+  ];
 
   return (
     <ThemeProvider>
@@ -185,7 +197,8 @@ export function Hero() {
               Sprite Sheet Generator
             </h1>
             <p className="text-xl text-gray-700 dark:text-gray-300 max-w-2xl mx-auto">
-              Transform your sketches into animated game sprites with AI-powered technology
+              Transform your sketches into animated game sprites with AI-powered
+              technology
             </p>
           </motion.div>
 
@@ -199,7 +212,9 @@ export function Hero() {
             >
               {/* Header with Refresh Button */}
               <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-bold text-gray-800 dark:text-white">Sprite Generator</h2>
+                <h2 className="text-2xl font-bold text-gray-800 dark:text-white">
+                  Sprite Generator
+                </h2>
                 <motion.button
                   whileHover={{ scale: 1.05, rotate: 180 }}
                   whileTap={{ scale: 0.95 }}
@@ -217,7 +232,9 @@ export function Hero() {
                 <div className="p-2 rounded-lg bg-gradient-to-br from-blue-500 to-blue-400 dark:from-blue-600 dark:to-blue-400 mr-3">
                   <Upload className="w-5 h-5 text-white" />
                 </div>
-                <h2 className="text-xl font-semibold text-gray-800 dark:text-white">1. Upload Your Sketch</h2>
+                <h2 className="text-xl font-semibold text-gray-800 dark:text-white">
+                  1. Upload Your Sketch
+                </h2>
               </div>
 
               <motion.div
@@ -237,10 +254,10 @@ export function Hero() {
                   isLoadingBasic
                     ? "bg-blue-600 cursor-wait"
                     : imageUploaded && !basicSpriteUrl
-                      ? "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg shadow-blue-500/20"
-                      : basicSpriteUrl
-                        ? "bg-green-600 hover:bg-green-700"
-                        : "bg-gray-300 dark:bg-gray-700 cursor-not-allowed text-gray-500 dark:text-gray-400"
+                    ? "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg shadow-blue-500/20"
+                    : basicSpriteUrl
+                    ? "bg-green-600 hover:bg-green-700"
+                    : "bg-gray-300 dark:bg-gray-700 cursor-not-allowed text-gray-500 dark:text-gray-400"
                 }`}
                 disabled={!imageUploaded || isLoadingBasic}
                 onClick={onCreateBasicSprite}
@@ -249,7 +266,11 @@ export function Hero() {
                   <>
                     <motion.div
                       animate={{ rotate: 360 }}
-                      transition={{ duration: 1, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+                      transition={{
+                        duration: 1,
+                        repeat: Number.POSITIVE_INFINITY,
+                        ease: "linear",
+                      }}
                       className="mr-2"
                     >
                       <Sparkles className="w-5 h-5" />
@@ -272,18 +293,29 @@ export function Hero() {
               {/* Step 2: Animation Controls */}
               <div className="flex items-center mb-4">
                 <div
-                  className={`p-2 rounded-lg ${basicSpriteUrl ? "bg-gradient-to-br from-purple-500 to-purple-400 dark:from-purple-600 dark:to-purple-400" : "bg-gradient-to-br from-gray-400 to-gray-300 dark:from-gray-600 dark:to-gray-500"} mr-3`}
+                  className={`p-2 rounded-lg ${
+                    basicSpriteUrl
+                      ? "bg-gradient-to-br from-purple-500 to-purple-400 dark:from-purple-600 dark:to-purple-400"
+                      : "bg-gradient-to-br from-gray-400 to-gray-300 dark:from-gray-600 dark:to-gray-500"
+                  } mr-3`}
                 >
                   <Wand2 className="w-5 h-5 text-white" />
                 </div>
                 <h2
-                  className={`text-xl font-semibold ${basicSpriteUrl ? "text-gray-800 dark:text-white" : "text-gray-500 dark:text-gray-400"}`}
+                  className={`text-xl font-semibold ${
+                    basicSpriteUrl
+                      ? "text-gray-800 dark:text-white"
+                      : "text-gray-500 dark:text-gray-400"
+                  }`}
                 >
                   2. Choose Animation Type
                 </h2>
               </div>
 
-              <motion.div whileHover={basicSpriteUrl ? { scale: 1.02 } : {}} className="mb-4">
+              <motion.div
+                whileHover={basicSpriteUrl ? { scale: 1.02 } : {}}
+                className="mb-4"
+              >
                 <select
                   id="animation"
                   value={animationType}
@@ -297,9 +329,7 @@ export function Hero() {
                 >
                   <option value="idle">Idle</option>
                   <option value="walking">Walking</option>
-                  <option value="jumping">Jumping</option>
-                  <option value="running">Running</option>
-                  <option value="attack">Attack</option>
+                  <option value="jump">Jumping</option>
                 </select>
               </motion.div>
 
@@ -310,10 +340,10 @@ export function Hero() {
                   !basicSpriteUrl
                     ? "bg-gray-300 dark:bg-gray-700 opacity-60 cursor-not-allowed text-gray-500 dark:text-gray-400"
                     : isLoadingAnimated
-                      ? "bg-purple-600 cursor-wait"
-                      : animatedSpriteUrl
-                        ? "bg-green-600 hover:bg-green-700"
-                        : "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg shadow-blue-500/20"
+                    ? "bg-purple-600 cursor-wait"
+                    : animatedSpriteUrl
+                    ? "bg-green-600 hover:bg-green-700"
+                    : "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg shadow-blue-500/20"
                 }`}
                 disabled={!basicSpriteUrl || isLoadingAnimated}
                 onClick={onCreateAnimatedSprite}
@@ -322,7 +352,11 @@ export function Hero() {
                   <>
                     <motion.div
                       animate={{ rotate: 360 }}
-                      transition={{ duration: 1, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+                      transition={{
+                        duration: 1,
+                        repeat: Number.POSITIVE_INFINITY,
+                        ease: "linear",
+                      }}
                       className="mr-2"
                     >
                       <Sparkles className="w-5 h-5" />
@@ -346,7 +380,11 @@ export function Hero() {
             {/* Right Panel (Output and Examples) */}
             <SpriteOutput
               basicSpriteUrl={basicSpriteUrl}
-              animatedSpriteUrl={spriteFramesUrls ? spriteFramesUrls[currentFrame] : animatedSpriteUrl}
+              animatedSpriteUrl={
+                spriteFramesUrls
+                  ? spriteFramesUrls[currentFrame]
+                  : animatedSpriteUrl
+              }
               animatedDownloadUrl={animatedSpriteUrl}
               isLoadingBasic={isLoadingBasic}
               isLoadingAnimated={isLoadingAnimated}
@@ -359,6 +397,5 @@ export function Hero() {
         <ThemeToggle />
       </section>
     </ThemeProvider>
-  )
+  );
 }
-

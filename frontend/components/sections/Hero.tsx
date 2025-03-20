@@ -310,7 +310,6 @@ export function Hero() {
                 >
                   2. Choose Animation Type
                 </h2>
-                
               </div>
 
               <motion.div
@@ -332,7 +331,6 @@ export function Hero() {
                   <option value="walking">Walking</option>
                   <option value="jump">Jumping</option>
                 </select>
-                
               </motion.div>
 
               <motion.button
@@ -350,7 +348,6 @@ export function Hero() {
                 disabled={!basicSpriteUrl || isLoadingAnimated}
                 onClick={onCreateAnimatedSprite}
               >
-                
                 {isLoadingAnimated ? (
                   <>
                     <motion.div
@@ -378,29 +375,39 @@ export function Hero() {
                   </>
                 )}
               </motion.button>
-               {/* Pro Tips */}
-                <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 1 }}
-                      whileHover={{ scale: 1.02 }}
-                      className="mt-8 p-4 bg-gray-50 dark:bg-gradient-to-br dark:from-gray-800 dark:to-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 transition-colors duration-300"
-                    >
-                      <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-2">
-                        <span className="mr-2">✅</span>
-                        Model Evaluation
-                      </h3>
-                      <p className="text-gray-600 dark:text-gray-400 text-pretty">
-                          <ul>
-                            <li><strong className=" text-black dark:text-white">FID Score:</strong> 45.56</li>
-                            <li><strong className=" text-black dark:text-white">Evaluation:</strong> The FID (Fréchet Inception Distance) measures how closely the generated images resemble real ones.</li>
-                            <li><strong className=" text-black dark:text-white">Dataset Size:</strong> 200 images (100 real, 100 generated)</li>
-                          </ul>
-                        </p>
-                  </motion.div>
-            
+              {/* Pro Tips */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1 }}
+                whileHover={{ scale: 1.02 }}
+                className="mt-8 p-4 bg-gray-50 dark:bg-gradient-to-br dark:from-gray-800 dark:to-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 transition-colors duration-300"
+              >
+                <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-2">
+                  <span className="mr-2">✅</span>
+                  Model Evaluation
+                </h3>
+                <p className="text-gray-600 dark:text-gray-400 text-pretty">
+                  <ul>
+                    <li>
+                      <strong className=" text-black dark:text-white">
+                        FID Score:
+                      </strong>{" "}
+                      45.56
+                    </li>
+                    <li>
+                      <strong className=" text-black dark:text-white">
+                        Evaluation:
+                      </strong>{" "}
+                      The FID (Fréchet Inception Distance) measures how closely
+                      the generated images resemble real ones.
+                    </li>
+                    {/* <li><strong className=" text-black dark:text-white">Dataset Size:</strong> 200 images (100 real, 100 generated)</li> */}
+                  </ul>
+                </p>
+              </motion.div>
             </motion.div>
-            
+
             {/* Right Panel (Output and Examples) */}
             <SpriteOutput
               basicSpriteUrl={basicSpriteUrl}
@@ -414,9 +421,7 @@ export function Hero() {
               isLoadingAnimated={isLoadingAnimated}
               exampleSprites={exampleSprites}
             />
-            
           </div>
-          
         </div>
 
         {/* Theme Toggle Button */}

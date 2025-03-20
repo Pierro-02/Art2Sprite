@@ -31,7 +31,7 @@ async def create_sprite(img: UploadFile = File(...)):
         downScaled_image = downscale32(sketch_image)
         # print(downScaled_image)
         padded_img = prepareSketch(downScaled_image)
-        # print(padded_img)
+        print(padded_img)
         
         model_test_path = os.path.join(STATIC_FOLDER, "test", unique_filename)
         padded_img.save(model_test_path)
@@ -49,6 +49,7 @@ async def create_sprite(img: UploadFile = File(...)):
         }
 
     except Exception as e:
+        print(f"Error: {e}")
         raise HTTPException(status_code=500, detail=f"Error processing image: {e}")
 
 

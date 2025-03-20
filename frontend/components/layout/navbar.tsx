@@ -54,22 +54,22 @@ export default function Header() {
           </div>
           <div className="hidden md:block">
             <div className="ml-10 flex items-center space-x-4">
-              <a href="./" className="text-gray-300 hover:text-blue-500 px-3 py-2 transition-colors">
+              <a href="./" className="text-gray-600 hover:text-blue-500 px-3 py-2 transition-colors">
                 Home
               </a>
-              <a href="./#features" className="text-gray-300 hover:text-blue-500 px-3 py-2 transition-colors">
+              <a href="./#features" className="text-gray-600 hover:text-blue-500 px-3 py-2 transition-colors">
                 Features
               </a>
-              <a href="./#timeline" className="text-gray-300 hover:text-blue-500 px-3 py-2 transition-colors">
+              <a href="./#timeline" className="text-gray-600 hover:text-blue-500 px-3 py-2 transition-colors">
                 Timeline
               </a>
-              <a href="/Developers" className="text-gray-300 hover:text-blue-500 px-3 py-2 transition-colors">
+              <a href="/Developers" className="text-gray-600 hover:text-blue-500 px-3 py-2 transition-colors">
                 Team
               </a>
-              <a href="/Work" className="text-gray-300 hover:text-blue-500 px-3 py-2 transition-colors">
+              <a href="/Work" className="text-gray-600 hover:text-blue-500 px-3 py-2 transition-colors">
                 Workspace
               </a>
-              <a href="/process" className="text-gray-300 hover:text-blue-500 px-3 py-2 transition-colors">
+              <a href="/process" className="text-gray-600 hover:text-blue-500 px-3 py-2 transition-colors">
                 Process
               </a>
               

@@ -1,30 +1,68 @@
-"use client"
+// app/page.tsx (or components/Home.tsx - adjust as needed)
+"use client";
 
-import { useState } from "react"
-import { motion } from "framer-motion"
-import Footer from "@/components/layout/Footer"
-import Navbar from "@/components/layout/navbar"
-import ExpandingCard from "@/components/sections/ExpandingCard"
-import Sidebar from "@/components/sections/Sidebar"
+import { useState } from 'react';
+// import Image from 'next/image'; // Remove this if you're not using <Image>
+import type { StaticImageData } from 'next/image';
+import { motion } from 'framer-motion';
 
-import poster from "@/assets/FYP Poster.png"
-import landpg from "@/assets/LandingPage.png"
-import uppg from "@/assets/UploadPage.png"
-import d1 from "@/assets/d1.png"
-import d2 from "@/assets/d2.png"
-import d3 from "@/assets/d3.png"
-import d4 from "@/assets/d4.png"
+// Import your components
+import Footer from '@/components/layout/Footer';
+import Navbar from '@/components/layout/navbar';
+import ExpandingCard from '@/components/sections/ExpandingCard';
+import Sidebar from '@/components/sections/Sidebar';
 
+// Import your images
+import poster from '@/assets/FYP Poster.png';
+import landpg from '@/assets/LandingPage.png';
+import uppg from '@/assets/UploadPage.png';
+import d1 from '@/assets/d1.png';
+import d2 from '@/assets/d2.png';
+import d3 from '@/assets/d3.png';
+import d4 from '@/assets/d4.png';
+
+// --- Interface Definitions (for Type Safety) ---
+
+// Interface for the *original* process data
+interface Process {
+  title: string;
+  description: string;
+  src: StaticImageData; // Correct type for imported images
+  width: number;
+  alt: string;
+}
+
+// Interface for the *selected* process data (in state)
+interface SelectedProcess {
+  title: string;
+  description: string;
+  src: string; // The URL (string) is stored in state
+  width: number;
+}
+
+// Interface for ExpandingCard props (assuming you have this component)
+// interface ExpandingCardProps { // Remove or comment out if not used
+//     title: string;
+//     image: string; // Expects a string URL
+//     onClick: () => void;
+//     className?: string; // Optional className
+// }
+// Interface for your Sidebar props
+// interface SidebarProps { //Remove or comment out if not used.
+//   isOpen: boolean;
+//   onClose: () => void;
+//   title: string;
+//   description: string;
+//   image: string;
+//   width: number;
+// }
+
+// --- Component ---
 
 export default function Home() {
-  const [selectedProcess, setSelectedProcess] = useState<null | {
-    title: string
-    description: string
-    src: string
-    width: number
-  }>(null)
+  const [selectedProcess, setSelectedProcess] = useState<SelectedProcess | null>(null);
 
-  const processes = [
+    const processes: Process[] = [
     {
       src: poster,
       alt: "Poster",
@@ -81,14 +119,11 @@ export default function Home() {
         "An overview of the technology stack used in our project, showcasing the various tools and frameworks employed. This diagram illustrates the integration of front-end, back-end, and database technologies, emphasizing the modern and scalable nature of our solution.",
       width: 700,
     },
-  ]
+  ];
 
   return (
     <main className="relative min-h-screen overflow-hidden">
-      
-
       <Navbar />
-
 
       {/* Process Section */}
       <section className="py-16 relative z-10 mt-10">
@@ -130,10 +165,18 @@ export default function Home() {
               >
                 <div className="relative">
                   <div className="absolute -inset-1 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-xl blur-sm opacity-70"></div>
+                  {/* Correctly use ExpandingCard and pass the URL */}
                   <ExpandingCard
                     title={process.title}
-                    image={process.src.src}
-                    onClick={() => setSelectedProcess(process)}
+                    image={process.src.src} // Pass the URL (string)
+                    onClick={() =>
+                      setSelectedProcess({
+                        title: process.title,
+                        description: process.description,
+                        src: process.src.src, // Store the URL in state
+                        width: process.width,
+                      })
+                    }
                     className="bg-gradient-to-b from-white to-gray-100 border border-gray-700 shadow-xl relative"
                   />
                 </div>
@@ -142,19 +185,19 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
-      <Sidebar
-        isOpen={!!selectedProcess}
-        onClose={() => setSelectedProcess(null)}
-        title={selectedProcess?.title || ""}
-        description={selectedProcess?.description || ""}
-        image={selectedProcess?.src || ""}
-        width={selectedProcess?.width || 0}
-        
-      />
+      {/* Conditionally render the Sidebar */}
+      {selectedProcess && (
+        <Sidebar
+          isOpen={true} // Always true when selectedProcess is not null
+          onClose={() => setSelectedProcess(null)}
+          title={selectedProcess.title}
+          description={selectedProcess.description}
+          image={selectedProcess.src} // Pass the URL directly
+          width={selectedProcess.width}
+        />
+      )}
+
       <Footer />
-
-      
     </main>
-  )
+  );
 }
-

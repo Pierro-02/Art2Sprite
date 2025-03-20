@@ -1,54 +1,39 @@
-### Getting Started
+# Running the Project with Docker
 
-There are 2 setup files in the root directory:
+This project utilizes Docker for containerized deployment of its backend and frontend services. Follow the steps below to build and run the project using Docker Compose.
 
-* setup.sh -> For Linux
-* setup.bat -> For Windows
+## Prerequisites
 
-------------------------------------------------------------
+- Ensure Docker and Docker Compose are installed on your system.
+- Backend service requires Python 3.9 and dependencies specified in `requirements.txt`.
+- Frontend service uses Node.js version 22.13.1.
 
-Run the following command in the root directory to set up the front end and the backend:
+## Environment Variables
 
-### For Linux
+- Backend: No specific environment variables are required.
+- Frontend: Ensure the `.env.local` file is present in the `./frontend` directory for environment-specific configurations.
 
-```
-./setup.sh
-```
+## Build and Run Instructions
 
-### For Windows
+1. Navigate to the project's root directory.
+2. Build and start the services using Docker Compose:
 
-Any **ONE** of the following will work:
-
-1. Simply double click the setup.bat
-2. Open cmd and run
-
-   ```
-   script.bat
-   ```
-3. Open powershell and run
-
-   ```
-   .\script.bat
+   ```bash
+   docker-compose up --build
    ```
 
-**Note:** Run the following commands in the root directory
+3. Access the services:
+   - Backend: [http://localhost:8000](http://localhost:8000)
+   - Frontend: [http://localhost:3000](http://localhost:3000)
 
-------------------------------------------------------------------
+## Exposed Ports
 
-Now that your Frontend and Backend setup is ready, go into your backend directory and run:
+- Backend: 8000
+- Frontend: 3000
 
-```
-uvicorn main:app --reload
-```
+## Notes
 
-This will start the FastAPI backend on localhost:8000. You can go to localhost:8000/docs to check the apis
+- The backend service is built from the `./backend` directory and uses `uvicorn` to serve the application.
+- The frontend service is built from the `./frontend` directory and serves the application using Node.js.
 
--------------------------------------------------------------------
-
-Now go into the frontend directory and run:
-
-```
-npm run dev
-```
-
-This will start the Nextjs frontend on localhost:3000
+For further details, refer to the respective `Dockerfile` and `docker-compose.yml` files.

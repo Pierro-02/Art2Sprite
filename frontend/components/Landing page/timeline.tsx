@@ -121,9 +121,8 @@ export default function Timeline() {
             className="sticky top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 text-blue-400"
             style={{ y: useTransform(scrollYProgress, [0, 1], [0, 100]) }}
           >
-            <PixelIcon
-              progress={useTransform(scrollYProgress, [0, 1], [0.5, 1])}
-            />
+            
+            <PixelIcon progress={useTransform(scrollYProgress, [0, 1], [0.5, 1]) as unknown as number} />
           </motion.div>
 
           {timelineEvents.map((event, index) => (

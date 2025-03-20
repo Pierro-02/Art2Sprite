@@ -215,7 +215,7 @@ export default function OverlappingCardsSection() {
                     {/* Image */}
                     <div className="aspect-video rounded-lg mt-3 overflow-hidden relative h-[180px] md:h-[220px]">
                       <Image
-                        src={project.imageSrc || "/placeholder.svg"}
+                        src={ "/placeholder.svg"}
                         alt={`Project ${project.title}`}
                         fill
                         sizes="(max-width: 768px) 100vw, 50vw"

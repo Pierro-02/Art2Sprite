@@ -1,3 +1,8 @@
+
+### Model PTH Files link
+https://drive.google.com/drive/folders/1gBJrt-3jb27BXpC1uSSkCcW85vh5BaLT
+
+
 ### Getting Started
 
 There are 2 setup files in the root directory:
